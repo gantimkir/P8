@@ -2,8 +2,8 @@ package com.example.kirill.p8;
 
 import java.util.Arrays;
 
-import org.nerdgrl.examples.contentproviderexample.DataAdapter.ViewHolder;
-import org.nerdgrl.examples.contentproviderexample.provider.ContractClass;
+import com.example.kirill.p8.DataAdapter.ViewHolder;
+import com.example.kirill.p8.ContractClass;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
