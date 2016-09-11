@@ -1,25 +1,19 @@
 package com.example.kirill.p8;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.HashMap;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
-public class ExampleProvider extends ContentProvider {
+import java.util.HashMap;
+
+public class ExampleProvider1 extends ContentProvider {
 	private static final int DATABASE_VERSION = 1;
 	private static HashMap<String, String> sTypeInfoProjectionMap;
 	private static HashMap<String, String> sTypesProjectionMap;
@@ -49,7 +43,7 @@ public class ExampleProvider extends ContentProvider {
 		}
 	}
 	private static class DatabaseHelper extends SQLiteOpenHelper {
-		private static final String DATABASE_NAME = "sortament";
+		private static final String DATABASE_NAME = "ContractClassDB";
 		public static final String DATABASE_TABLE_TYPEINFO = ContractClass.TypeInfo.TABLE_NAME;
 		public static final String DATABASE_TABLE_TYPES = ContractClass.Types.TABLE_NAME;
 		public static final String KEY_ROWID  = "_id";
@@ -59,9 +53,21 @@ public class ExampleProvider extends ContentProvider {
 		public static final String KEY_TYPE_ID   = ContractClass.TypeInfo.COLUMN_NAME_TYPE_ID;
 		public static final String KEY_NAME   = ContractClass.Types.COLUMN_NAME_NAME;
 		public static final String KEY_GOST   = ContractClass.Types.COLUMN_NAME_GOST;
-
-		private static String DB_PATH = "/data/data/com.example.kirill.p8/databases/";
-
+		private static final String DATABASE_CREATE_TABLE_TYPEINFO =
+			"create table "+ DATABASE_TABLE_TYPEINFO + " ("
+				+ KEY_ROWID + " integer primary key autoincrement, "
+				+ KEY_NUMSORT + " string , "
+				+ KEY_ITEM_NAME + " string , "
+				+ KEY_MASS_PER_ITEM + " real , "
+				+ KEY_TYPE_ID + " integer, "
+				+" foreign key ("+KEY_TYPE_ID+") references "+DATABASE_TABLE_TYPES+"("+KEY_ROWID+"));";
+				
+		private static final String DATABASE_CREATE_TABLE_TYPES =
+			"create table "+ DATABASE_TABLE_TYPES + " ("
+				+ KEY_ROWID + " integer primary key autoincrement, "
+				+ KEY_NAME + " string , "
+				+ KEY_GOST + " string );";
+				
 		private Context ctx;
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -69,54 +75,42 @@ public class ExampleProvider extends ContentProvider {
 		}
 		@Override
 		public void onCreate(SQLiteDatabase db) {
+			db.execSQL(DATABASE_CREATE_TABLE_TYPEINFO);
+			db.execSQL(DATABASE_CREATE_TABLE_TYPES);
+			db.execSQL("insert into types values (null, '1ugolok', 'A');");
+			db.execSQL("insert into types values (null, '2shveller', 'B');");
+			db.execSQL("insert into types values (null, '3truba', 'C');");
+			db.execSQL("insert into types values (null, '4dvutavr', 'D');");
+			db.execSQL("insert into types values (null, '5list', 'E');");
+
+			db.execSQL("insert into typeinfo values (null, '45', 'm', 4.1, 0);");
+			db.execSQL("insert into typeinfo values (null, '50', 'm', 3.5, 0);");
+			db.execSQL("insert into typeinfo values (null, '60', 'm', 4.9, 0);");
+			
+			db.execSQL("insert into typeinfo values (null, '12', 'm', 4.1, 1);");
+			db.execSQL("insert into typeinfo values (null, '14', 'm', 3.5, 1);");
+			db.execSQL("insert into typeinfo values (null, '16', 'm', 4.9, 1);");
+			
+			db.execSQL("insert into typeinfo values (null, '50', 'm', 4.1, 2);");
+			db.execSQL("insert into typeinfo values (null, '63', 'm', 3.5, 2);");
+			db.execSQL("insert into typeinfo values (null, '76', 'm', 4.9, 2);");
+			
+			db.execSQL("insert into typeinfo values (null, '16', 'm', 4.1, 3);");
+			db.execSQL("insert into typeinfo values (null, '18', 'm', 3.5, 3);");
+			db.execSQL("insert into typeinfo values (null, '20', 'm', 4.9, 3);");
+			
+			db.execSQL("insert into typeinfo values (null, '4', 'm2', 4.1, 4);");
+			db.execSQL("insert into typeinfo values (null, '5', 'm2', 3.5, 4);");
+			db.execSQL("insert into typeinfo values (null, '6', 'm2', 4.9, 4);");
+
 		}
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			
+			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_CREATE_TABLE_TYPEINFO);
+			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_CREATE_TABLE_TYPES);
+			onCreate(db);
 		}
-
-		public void create_db(){
-			InputStream myInput = null;
-			OutputStream myOutput = null;
-			try {
-				File file = new File(DB_PATH + DATABASE_NAME);
-				if (!file.exists()) {
-					this.getReadableDatabase();
-					//получаем локальную бд как поток
-					myInput = ctx.getAssets().open(DATABASE_NAME);
-					// Путь к новой бд
-					String outFileName = DB_PATH + DATABASE_NAME;
-					// Открываем пустую бд
-					myOutput = new FileOutputStream(outFileName);
-					// побайтово копируем данные
-					byte[] buffer = new byte[1024];
-					int length;
-					while ((length = myInput.read(buffer)) > 0) {
-						myOutput.write(buffer, 0, length);
-					}
-					myOutput.flush();
-					myOutput.close();
-					myInput.close();
-				}
-			}
-			catch(IOException ex){
-			}
-		}
-
-        public void open() throws SQLException {
-//            String path = DB_PATH + DATABASE_NAME;
-//            database = SQLiteDatabase.openDatabase(path, null,
-//                    SQLiteDatabase.OPEN_READWRITE);
-
-        }
-
-        @Override
-        public synchronized void close() {
-//            if (database != null) {
-//                database.close();
-//            }
-            super.close();
-        }
-
 	}
 	@Override
 	public int delete(Uri uri, String where, String[] whereArgs) {

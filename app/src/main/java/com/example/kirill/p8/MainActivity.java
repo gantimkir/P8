@@ -14,6 +14,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,7 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity implements LoaderCallbacks<Cursor>, OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, OnItemClickListener{
 	
 	private ListView lvItems;
 	private DataAdapter mAdapter;
@@ -60,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
 		}
 		AlertDialog.Builder builderSingle = new AlertDialog.Builder(
 				MainActivity.this);
-        builderSingle.setTitle("Students");
+        builderSingle.setTitle("TypeInfo");
         builderSingle.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
 
@@ -94,8 +95,9 @@ public class MainActivity extends ActionBarActivity implements LoaderCallbacks<C
 				do {
 					String numsort = c.getString(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_NUMSORT));
 					String item_name = c.getString(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_ITEM_NAME));
+					Integer type_id=c.getInt(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_TYPE_ID));
 					double mass_per_item = c.getDouble(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_MASS_PER_ITEM));
-					typeinfo[i] = numsort+" "+item_name+" | "+mass_per_item;
+					typeinfo[i] = numsort+" "+item_name+" | "+mass_per_item+"|"+type_id;
 					i++;
 				} while (c.moveToNext());
 			}

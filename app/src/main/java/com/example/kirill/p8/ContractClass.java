@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class ContractClass {
-	public static final String AUTHORITY = "com.example.kirill.p8.provider.Sortament";
+	public static final String AUTHORITY = "com.example.kirill.p8.Sortament";
 	private ContractClass() {}
 	public static final class TypeInfo implements BaseColumns {
 		private TypeInfo() {}

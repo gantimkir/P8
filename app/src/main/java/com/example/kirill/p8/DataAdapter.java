@@ -26,8 +26,8 @@ public class DataAdapter extends CursorAdapter {
 		String typeGOST = cur.getString(cur.getColumnIndex(ContractClass.Types.COLUMN_NAME_GOST));
 		ViewHolder holder = (ViewHolder) view.getTag();
 		if(holder != null) {
-			holder.tvTypeName.setText(typeNumber+"\""+typeGOST+"\"");
-			holder.classID = id;
+			holder.tvTypeName.setText(String.valueOf(id)+"|||"+typeNumber+"\""+typeGOST+"\"");
+			holder.classID = id-1;
 		}
 	}
 
