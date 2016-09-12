@@ -99,6 +99,7 @@ public class ExampleProvider extends ContentProvider {
 				}
 			}
 			catch(IOException ex){
+
 			}
 		}
 
@@ -227,6 +228,7 @@ public class ExampleProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		dbHelper = new DatabaseHelper(getContext());
+        dbHelper.create_db();
 		return true;
 	}
 	@Override
