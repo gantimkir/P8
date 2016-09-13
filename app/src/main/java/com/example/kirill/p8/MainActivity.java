@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		if(savedInstanceState != null) {
-			return;
-		}
+//		if(savedInstanceState != null) {
+//			return;
+//		}
 		lvItems = (ListView)findViewById(R.id.lvItems);
 		mAdapter = new DataAdapter(this, null, 0);
 		lvItems.setAdapter(mAdapter);

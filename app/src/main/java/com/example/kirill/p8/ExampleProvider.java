@@ -82,7 +82,7 @@ public class ExampleProvider extends ContentProvider {
 				if (!file.exists()) {
 					this.getReadableDatabase();
 					//получаем локальную бд как поток
-					myInput = ctx.getAssets().open(DATABASE_NAME);
+					myInput = ctx.getAssets().open(DATABASE_NAME+".db");
 					// Путь к новой бд
 					String outFileName = DB_PATH + DATABASE_NAME;
 					// Открываем пустую бд
@@ -99,7 +99,7 @@ public class ExampleProvider extends ContentProvider {
 				}
 			}
 			catch(IOException ex){
-
+				String strEx1=ex.getMessage();
 			}
 		}
 
