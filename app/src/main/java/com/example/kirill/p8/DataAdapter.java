@@ -26,23 +26,33 @@ public class DataAdapter extends CursorAdapter {
 		String typeGOST = cur.getString(cur.getColumnIndex(ContractClass.Types.COLUMN_NAME_GOST));
 		ViewHolder holder = (ViewHolder) view.getTag();
 		if(holder != null) {
-			holder.tvTypeName.setText(String.valueOf(id)+"|||"+typeNumber+"\""+typeGOST+"\"");
+//			holder.tvTypeName.setText(String.valueOf(id)+"|||"+typeNumber+"\""+typeGOST+"\"");
+			holder.tvName.setText(typeNumber);
+			holder.tvGOST.setText(typeGOST);
+			holder.tvId.setText(String.valueOf(id));
 			holder.classID = id-1;
 		}
 	}
 
 	@Override
 	public View newView(Context ctx, Cursor cur, ViewGroup parent) {
-		View root = mInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+//		View root = mInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+		View root = mInflater.inflate(R.layout.type_text, parent, false);
 		ViewHolder holder = new ViewHolder();
-		TextView tvTypeName = (TextView)root.findViewById(android.R.id.text1);
-		holder.tvTypeName = tvTypeName;
+		TextView tvName = (TextView)root.findViewById(R.id.tvName);
+		TextView tvGOST = (TextView)root.findViewById(R.id.tvGOST);
+		TextView tvId = (TextView)root.findViewById(R.id.tvId);
+		holder.tvName = tvName;
+		holder.tvGOST = tvGOST;
+		holder.tvId = tvId;
 		root.setTag(holder);
 		return root;
 	}
 	
 	public static class ViewHolder {
-		public TextView tvTypeName;
+		public TextView tvName;
+		public TextView tvGOST;
+		public TextView tvId;
 		public long classID;
 	}
 
