@@ -8,6 +8,7 @@ import com.example.kirill.p8.ContractClass;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -127,6 +128,15 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
 		mAdapter.swapCursor(null);
 	}
 
-	
 
+	public void onClick(View view) {
+		Intent intent=new Intent();
+		switch (view.getId())
+		{
+			case R.id.buttonDiffScreens:
+				intent.setClass(MainActivity.this,Main2Activity.class);
+				startActivity(intent);
+				break;
+		}
+	}
 }

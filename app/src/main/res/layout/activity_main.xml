@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Разные экраны"
+        android:id="@+id/buttonDiffScreens"
+        android:onClick="onClick" />
+
     <ListView
         android:id="@+id/lvItems"
         android:layout_width="match_parent"
