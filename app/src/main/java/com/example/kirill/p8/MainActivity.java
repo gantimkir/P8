@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, OnItemClickListener{
 	
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
 	@SuppressLint("NewApi")
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
 		final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
         		MainActivity.this,
                 android.R.layout.simple_list_item_1);
