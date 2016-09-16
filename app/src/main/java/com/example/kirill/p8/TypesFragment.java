@@ -18,7 +18,7 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
 
     private ListView lvItems;
     private DataAdapter mAdapter;
-
+//    private View previous;
 
     public interface onItemClickListener {
         public void itemClick(int position,long id);
@@ -37,6 +37,7 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
         mAdapter = new DataAdapter(getContext(), null, 0);
         setListAdapter(mAdapter);
         getActivity().getSupportLoaderManager().initLoader(0, null, this);
+//        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
 //    @Override
@@ -50,6 +51,10 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         listener.itemClick(position, id);
+//        previous.setSelected(false);
+//        v.setSelected(true);
+//        previous=v;
+
     }
 
 

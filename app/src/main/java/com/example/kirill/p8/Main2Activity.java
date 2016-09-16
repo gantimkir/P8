@@ -1,5 +1,6 @@
 package com.example.kirill.p8;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
@@ -8,27 +9,48 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 public class Main2Activity extends FragmentActivity implements TypesFragment.onItemClickListener {
-    int position=1;
+    private int position;
+    boolean withDetails = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        ShowTypeInfo(position);
-    }
 
+        setContentView(R.layout.activity_main2);
+        withDetails = (findViewById(R.id.typeinfo) != null);
+
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getInt("position");
+        }
+        else position=1;
+
+        if (withDetails) {
+            ShowTypeInfo(position);
+        }
+        else {
+            if (savedInstanceState!=null) {
+                ShowTypeInfo(position);
+            }
+        }
+    }
 
     @Override
-    public void itemClick(int position, long id) {
-        ShowTypeInfo(position);
+    public void itemClick(int typeID, long id)
+    {
+        position=typeID;
+        ShowTypeInfo(typeID);
     }
 
-    void ShowTypeInfo(int position) {
-        Toast.makeText(this,String.valueOf(position),Toast.LENGTH_SHORT).show();
-        TypesInfoFragment ti=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.typeinfo);
-        String[] typeinfo=getTypeInfo(position);
-        ti=TypesInfoFragment.newInstance(typeinfo);
-        getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, ti).commit();
+    void ShowTypeInfo(int typeID) {
+        String[] typeinfo=getTypeInfo(typeID);
+        if (!withDetails) {
+            startActivity(new Intent(this, TypesInfoActivity.class).putExtra("typeinfo", typeinfo));
+        }
+        else {
+            TypesInfoFragment ti=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.typeinfo);
+            ti=TypesInfoFragment.newInstance(typeinfo);
+            getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, ti).commit();
+        }
     }
 
     public String[] getTypeInfo(int typeID) {
@@ -55,5 +77,11 @@ public class Main2Activity extends FragmentActivity implements TypesFragment.onI
             c.close();
         }
         return typeinfo;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("position", position);
     }
 }

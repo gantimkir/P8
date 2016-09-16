@@ -30,6 +30,7 @@
             android:exported="false" />
 
         <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".TypesInfoActivity"></activity>
     </application>
 
 </manifest>
