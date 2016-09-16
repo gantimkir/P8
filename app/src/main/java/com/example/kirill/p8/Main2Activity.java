@@ -8,30 +8,30 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 public class Main2Activity extends FragmentActivity implements TypesFragment.onItemClickListener {
-    long id=1;
+    int position=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        ShowTypeInfo(id);
+        ShowTypeInfo(position);
     }
 
 
     @Override
     public void itemClick(int position, long id) {
-        ShowTypeInfo(id);
+        ShowTypeInfo(position);
     }
 
-    void ShowTypeInfo(long id) {
-        Toast.makeText(this,String.valueOf(id),Toast.LENGTH_SHORT).show();
+    void ShowTypeInfo(int position) {
+        Toast.makeText(this,String.valueOf(position),Toast.LENGTH_SHORT).show();
         TypesInfoFragment ti=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.typeinfo);
-        String[] typeinfo=getTypeInfo(id);
+        String[] typeinfo=getTypeInfo(position);
         ti=TypesInfoFragment.newInstance(typeinfo);
         getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, ti).commit();
     }
 
-    public String[] getTypeInfo(long typeID) {
+    public String[] getTypeInfo(int typeID) {
         String[] typeinfo = null;
         Cursor c = getContentResolver().query(
                 ContractClass.TypeInfo.CONTENT_URI,
