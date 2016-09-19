@@ -23,10 +23,15 @@ public class ExampleProvider extends ContentProvider {
 	private static final int DATABASE_VERSION = 1;
 	private static HashMap<String, String> sTypeInfoProjectionMap;
 	private static HashMap<String, String> sTypesProjectionMap;
+	private static HashMap<String, String> sNotesProjectionMap;
+
 	private static final int TYPEINFO = 1;
 	private static final int TYPEINFO_ID = 2;
 	private static final int TYPES = 3;
 	private static final int TYPES_ID = 4;
+	private static final int NOTES = 5;
+	private static final int NOTES_ID = 6;
+
 	private static final UriMatcher sUriMatcher;
 	private DatabaseHelper dbHelper;
 	static {
@@ -35,6 +40,8 @@ public class ExampleProvider extends ContentProvider {
 		sUriMatcher.addURI(ContractClass.AUTHORITY, "typeinfo/#", TYPEINFO_ID);
 		sUriMatcher.addURI(ContractClass.AUTHORITY, "types", TYPES);
 		sUriMatcher.addURI(ContractClass.AUTHORITY, "types/#", TYPES_ID);
+		sUriMatcher.addURI(ContractClass.AUTHORITY, "notes", NOTES);
+		sUriMatcher.addURI(ContractClass.AUTHORITY, "notes/#", NOTES_ID);
 		sTypeInfoProjectionMap = new HashMap<String, String>();
 		for(int i=0; i < ContractClass.TypeInfo.DEFAULT_PROJECTION.length; i++) {
 			sTypeInfoProjectionMap.put(
@@ -47,18 +54,33 @@ public class ExampleProvider extends ContentProvider {
 				ContractClass.Types.DEFAULT_PROJECTION[i],
 				ContractClass.Types.DEFAULT_PROJECTION[i]);
 		}
+
+		sNotesProjectionMap = new HashMap<String, String>();
+		for(int i=0; i < ContractClass.Notes.DEFAULT_PROJECTION.length; i++) {
+			sNotesProjectionMap.put(
+					ContractClass.Notes.DEFAULT_PROJECTION[i],
+					ContractClass.Notes.DEFAULT_PROJECTION[i]);
+		}
 	}
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 		private static final String DATABASE_NAME = "sortament";
 		public static final String DATABASE_TABLE_TYPEINFO = ContractClass.TypeInfo.TABLE_NAME;
 		public static final String DATABASE_TABLE_TYPES = ContractClass.Types.TABLE_NAME;
+		public static final String DATABASE_TABLE_NOTES = ContractClass.Notes.TABLE_NAME;
 		public static final String KEY_ROWID  = "_id";
+		//TypeInfo KEYS
 		public static final String KEY_NUMSORT   = ContractClass.TypeInfo.COLUMN_NAME_NUMSORT;
 		public static final String KEY_ITEM_NAME   = ContractClass.TypeInfo.COLUMN_ITEM_NAME;
 		public static final String KEY_MASS_PER_ITEM   = ContractClass.TypeInfo.COLUMN_NAME_MASS_PER_ITEM;
 		public static final String KEY_TYPE_ID   = ContractClass.TypeInfo.COLUMN_NAME_TYPE_ID;
+		//Types KEYS
 		public static final String KEY_NAME   = ContractClass.Types.COLUMN_NAME_NAME;
 		public static final String KEY_GOST   = ContractClass.Types.COLUMN_NAME_GOST;
+		//Notes KEYS
+		public static final String KEY_TITLE   = ContractClass.Notes.COLUMN_TITLE;
+		public static final String KEY_NOTE   = ContractClass.Notes.COLUMN_NOTE;
+		public static final String CREATED_DATE   = ContractClass.Notes.COLUMN_CREATED_DATE;
+		public static final String KEY_MODIFIED_DATE   = ContractClass.Notes.COLUMN_MODIFIED_DATE;
 
 		private static String DB_PATH = "/data/data/com.example.kirill.p8/databases/";
 
@@ -145,7 +167,17 @@ public class ExampleProvider extends ContentProvider {
 				}
 				count = db.delete(ContractClass.Types.TABLE_NAME,finalWhere,whereArgs);
 				break;
-		default:
+			case NOTES:
+				count = db.delete(ContractClass.Notes.TABLE_NAME,where,whereArgs);
+				break;
+			case NOTES_ID:
+				finalWhere = ContractClass.Notes._ID + " = " + uri.getPathSegments().get(ContractClass.Notes.NOTES_ID_PATH_POSITION);
+				if (where != null) {
+					finalWhere = finalWhere + " AND " + where;
+				}
+				count = db.delete(ContractClass.Notes.TABLE_NAME,finalWhere,whereArgs);
+				break;
+			default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
 		getContext().getContentResolver().notifyChange(uri, null);
@@ -171,7 +203,8 @@ public class ExampleProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues initialValues) {
 		if (
 			sUriMatcher.match(uri) != TYPEINFO &&
-			sUriMatcher.match(uri) != TYPES
+			sUriMatcher.match(uri) != TYPES &&
+			sUriMatcher.match(uri) != NOTES
 		) {
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -222,9 +255,31 @@ public class ExampleProvider extends ContentProvider {
 				getContext().getContentResolver().notifyChange(rowUri, null);
 			}
 			break;
+			case NOTES:
+				if (values.containsKey(ContractClass.Notes.COLUMN_TITLE) == false) {
+					values.put(ContractClass.Notes.COLUMN_TITLE, "");
+				}
+				if (values.containsKey(ContractClass.Notes.COLUMN_NOTE) == false) {
+					values.put(ContractClass.Notes.COLUMN_NOTE, "");
+				}
+				if (values.containsKey(ContractClass.Notes.COLUMN_CREATED_DATE) == false) {
+					values.put(ContractClass.Notes.COLUMN_CREATED_DATE, "");
+					if (values.containsKey(ContractClass.Notes.COLUMN_MODIFIED_DATE) == false) {
+						values.put(ContractClass.Notes.COLUMN_MODIFIED_DATE, "");
+				}
+				rowId = db.insert(ContractClass.Notes.TABLE_NAME,
+						ContractClass.Notes.COLUMN_TITLE,
+						values);
+				if (rowId > 0) {
+					rowUri = ContentUris.withAppendedId(ContractClass.Notes.CONTENT_ID_URI_BASE, rowId);
+					getContext().getContentResolver().notifyChange(rowUri, null);
+				}
+				break;
+			}
 		}
 		return rowUri;
 	}
+
 	@Override
 	public boolean onCreate() {
 		dbHelper = new DatabaseHelper(getContext());
@@ -258,6 +313,17 @@ public class ExampleProvider extends ContentProvider {
 				qb.appendWhere(ContractClass.Types._ID + "=" + uri.getPathSegments().get(ContractClass.Types.TYPES_ID_PATH_POSITION));
 				orderBy = ContractClass.Types.DEFAULT_SORT_ORDER;
 				break;
+			case NOTES:
+				qb.setTables(ContractClass.Notes.TABLE_NAME);
+				qb.setProjectionMap(sNotesProjectionMap);
+				orderBy = ContractClass.Notes.DEFAULT_SORT_ORDER;
+				break;
+			case NOTES_ID:
+				qb.setTables(ContractClass.Notes.TABLE_NAME);
+				qb.setProjectionMap(sNotesProjectionMap);
+				qb.appendWhere(ContractClass.Notes._ID + "=" + uri.getPathSegments().get(ContractClass.Notes.NOTES_ID_PATH_POSITION));
+				orderBy = ContractClass.Notes.DEFAULT_SORT_ORDER;
+				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -290,6 +356,17 @@ public class ExampleProvider extends ContentProvider {
 			case TYPES_ID:
 				id = uri.getPathSegments().get(ContractClass.Types.TYPES_ID_PATH_POSITION);
 				finalWhere = ContractClass.Types._ID + " = " + id;
+				if (where !=null) {
+					finalWhere = finalWhere + " AND " + where;
+				}
+				count = db.update(ContractClass.Types.TABLE_NAME, values, finalWhere, whereArgs);
+				break;
+			case NOTES:
+				count = db.update(ContractClass.Notes.TABLE_NAME, values, where, whereArgs);
+				break;
+			case NOTES_ID:
+				id = uri.getPathSegments().get(ContractClass.Notes.NOTES_ID_PATH_POSITION);
+				finalWhere = ContractClass.Notes._ID + " = " + id;
 				if (where !=null) {
 					finalWhere = finalWhere + " AND " + where;
 				}
