@@ -79,7 +79,7 @@ public class ExampleProvider extends ContentProvider {
 		//Notes KEYS
 		public static final String KEY_TITLE   = ContractClass.Notes.COLUMN_TITLE;
 		public static final String KEY_NOTE   = ContractClass.Notes.COLUMN_NOTE;
-		public static final String CREATED_DATE   = ContractClass.Notes.COLUMN_CREATED_DATE;
+		public static final String KEY_CREATED_DATE   = ContractClass.Notes.COLUMN_CREATED_DATE;
 		public static final String KEY_MODIFIED_DATE   = ContractClass.Notes.COLUMN_MODIFIED_DATE;
 
 		private static String DB_PATH = "/data/data/com.example.kirill.p8/databases/";
@@ -91,9 +91,18 @@ public class ExampleProvider extends ContentProvider {
 		}
 		@Override
 		public void onCreate(SQLiteDatabase db) {
+			db.execSQL("CREATE TABLE " + DATABASE_TABLE_NOTES + " ("
+					+ KEY_ROWID + " INTEGER PRIMARY KEY,"
+					+ KEY_TITLE + " TEXT,"
+					+ KEY_NOTE + " TEXT,"
+					+ KEY_CREATED_DATE + " INTEGER,"
+					+ KEY_MODIFIED_DATE + " INTEGER"
+					+ ");");
 		}
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			db.execSQL("DROP TABLE IF EXISTS notes");
+			onCreate(db);
 		}
 
 		public void create_db(){

@@ -6,6 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/lvNotes">
+    </ListView>
     <fragment
         android:id="@+id/fragment_types"
         android:name="com.example.kirill.p8.TypesFragment"

@@ -2,21 +2,24 @@ package com.example.kirill.p8;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.widget.ListView;
 
-public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener {
+public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
     private int position;
     boolean withDetails = true;
+    NoteAdapter mNoteAdapter;
+    ListView lvNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         withDetails = (findViewById(R.id.typeinfo) != null);
 
         if (savedInstanceState != null) {
@@ -32,13 +35,14 @@ public class MainActivity extends FragmentActivity implements TypesFragment.onIt
                 ShowTypeInfo(position);
             }
         }
+        ShowNotes();
     }
 
-    @Override
-    public void itemClick(int typeID, long id)
-    {
-        position=typeID;
-        ShowTypeInfo(typeID);
+    void ShowNotes(){
+        lvNotes=(ListView) findViewById(R.id.lvNotes);
+        mNoteAdapter = new NoteAdapter(this, null, 0);
+        lvNotes.setAdapter(mNoteAdapter);
+        this.getSupportLoaderManager().initLoader(0, null, this);
     }
 
     void ShowTypeInfo(int typeID) {
@@ -83,5 +87,33 @@ public class MainActivity extends FragmentActivity implements TypesFragment.onIt
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("position", position);
+    }
+
+    @Override
+    public void itemClick(int typeID, long id)
+    {
+        position=typeID;
+        ShowTypeInfo(typeID);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                this,
+                ContractClass.Notes.CONTENT_URI,
+                ContractClass.Notes.DEFAULT_PROJECTION,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mNoteAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mNoteAdapter.swapCursor(null);
     }
 }
