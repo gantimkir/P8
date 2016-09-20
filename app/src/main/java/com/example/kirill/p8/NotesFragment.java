@@ -7,20 +7,18 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 
-public class TypesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class NotesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-//    private ListView lvItems;
-    private DataAdapter mAdapter;
+    private ListView lvNotes;
+    private NoteAdapter mAdapter;
+//    private View previous;
 
     public interface onItemClickListener {
-        public void itemClick(int position,long id);
+        public void NoteItemClick(int position, long id);
     }
     onItemClickListener listener;
 
@@ -28,9 +26,12 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new DataAdapter(getContext(), null, 0);
+
+
+        mAdapter = new NoteAdapter(getContext(), null, 0);
         setListAdapter(mAdapter);
         getActivity().getSupportLoaderManager().initLoader(0, null, this);
+
     }
 
 //    @Override
@@ -43,9 +44,7 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        listener.itemClick(position, id);
-
-
+        listener.NoteItemClick(position, id);
     }
 
 
@@ -63,8 +62,8 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(
                 getContext(),
-                ContractClass.Types.CONTENT_URI,
-                ContractClass.Types.DEFAULT_PROJECTION,
+                ContractClass.Notes.CONTENT_URI,
+                ContractClass.Notes.DEFAULT_PROJECTION,
                 null,
                 null,
                 null);

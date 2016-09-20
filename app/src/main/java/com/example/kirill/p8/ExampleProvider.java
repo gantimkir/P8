@@ -91,18 +91,18 @@ public class ExampleProvider extends ContentProvider {
 		}
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL("CREATE TABLE " + DATABASE_TABLE_NOTES + " ("
-					+ KEY_ROWID + " INTEGER PRIMARY KEY,"
-					+ KEY_TITLE + " TEXT,"
-					+ KEY_NOTE + " TEXT,"
-					+ KEY_CREATED_DATE + " INTEGER,"
-					+ KEY_MODIFIED_DATE + " INTEGER"
-					+ ");");
+//			db.execSQL("CREATE TABLE " + DATABASE_TABLE_NOTES + " ("
+//					+ KEY_ROWID + " INTEGER PRIMARY KEY,"
+//					+ KEY_TITLE + " TEXT,"
+//					+ KEY_NOTE + " TEXT,"
+//					+ KEY_CREATED_DATE + " INTEGER,"
+//					+ KEY_MODIFIED_DATE + " INTEGER"
+//					+ ");");
 		}
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("DROP TABLE IF EXISTS notes");
-			onCreate(db);
+//			db.execSQL("DROP TABLE IF EXISTS notes");
+//			onCreate(db);
 		}
 
 		public void create_db(){

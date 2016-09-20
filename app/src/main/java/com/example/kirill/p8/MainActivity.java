@@ -9,11 +9,9 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.widget.ListView;
 
-public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener, NotesFragment.onItemClickListener{
     private int position;
     boolean withDetails = true;
-    NoteAdapter mNoteAdapter;
-    ListView lvNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +33,15 @@ public class MainActivity extends FragmentActivity implements TypesFragment.onIt
                 ShowTypeInfo(position);
             }
         }
-        ShowNotes();
+
     }
 
-    void ShowNotes(){
-        lvNotes=(ListView) findViewById(R.id.lvNotes);
-        mNoteAdapter = new NoteAdapter(this, null, 0);
-        lvNotes.setAdapter(mNoteAdapter);
-        this.getSupportLoaderManager().initLoader(0, null, this);
-    }
+//    void ShowNotes(){
+//        lvNotes=(ListView) findViewById(R.id.lvNotes);
+//        mNoteAdapter = new NoteAdapter(this, null, 0);
+//        lvNotes.setAdapter(mNoteAdapter);
+//        this.getSupportLoaderManager().initLoader(0, null, this);
+//    }
 
     void ShowTypeInfo(int typeID) {
         String[] typeinfo=getTypeInfo(typeID);
@@ -97,23 +95,8 @@ public class MainActivity extends FragmentActivity implements TypesFragment.onIt
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                this,
-                ContractClass.Notes.CONTENT_URI,
-                ContractClass.Notes.DEFAULT_PROJECTION,
-                null,
-                null,
-                null);
+    public void NoteItemClick(int typeID, long id){
+
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mNoteAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mNoteAdapter.swapCursor(null);
-    }
 }

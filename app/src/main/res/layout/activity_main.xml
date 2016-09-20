@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    <ListView
+    <fragment
+        android:id="@+id/fragment_notes"
+        android:name="com.example.kirill.p8.NotesFragment"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/lvNotes">
-    </ListView>
+        android:layout_height="400px"
+        android:layout_weight="1">
+    </fragment>
     <fragment
         android:id="@+id/fragment_types"
         android:name="com.example.kirill.p8.TypesFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_below="@+id/fragment_notes">
     </fragment>
-</LinearLayout>
+</RelativeLayout>
