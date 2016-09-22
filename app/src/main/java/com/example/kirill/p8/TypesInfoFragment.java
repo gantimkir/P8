@@ -1,5 +1,6 @@
 package com.example.kirill.p8;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -9,14 +10,22 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by _ on 15.09.2016.
  */
-public class TypesInfoFragment extends Fragment {
+public class TypesInfoFragment extends Fragment{
+
+
+    public interface onTypesInfoItemClickListener {
+        public void onTypesInfoItemClick(AdapterView<?> parent, View view, int position, long id);
+    }
+    onTypesInfoItemClickListener listener;
 
     public static TypesInfoFragment newInstance(String[] typeInfo) {
         TypesInfoFragment ti = new TypesInfoFragment();
@@ -44,6 +53,18 @@ public class TypesInfoFragment extends Fragment {
         }
         ListView lvTypeInfo=(ListView) v.findViewById(R.id.lvName1);
         lvTypeInfo.setAdapter(arrayAdapter);
+        lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.onTypesInfoItemClick(parent,view,position,id);
+            }
+        });
         return v;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (onTypesInfoItemClickListener) context;
     }
 }

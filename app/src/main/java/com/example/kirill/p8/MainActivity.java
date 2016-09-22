@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener, NotesFragment.onItemClickListener{
+public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
+TypesInfoFragment.onTypesInfoItemClickListener, TypesInfoActivity.TypesInfoActivityListener {
     private int position;
     boolean withDetails = true;
 
@@ -96,7 +100,16 @@ public class MainActivity extends FragmentActivity implements TypesFragment.onIt
 
     @Override
     public void NoteItemClick(int typeID, long id){
-
+        Toast.makeText(this,"Note activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onTypesInfoItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this,"TypeInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTypesInfoActivityItemClick(int position, long id) {
+        Toast.makeText(this,"TypeInfo activated!!! "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+    }
 }

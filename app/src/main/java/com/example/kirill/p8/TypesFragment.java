@@ -30,7 +30,7 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
         mAdapter = new DataAdapter(getContext(), null, 0);
         setListAdapter(mAdapter);
-        getActivity().getSupportLoaderManager().initLoader(0, null, this);
+        getActivity().getSupportLoaderManager().initLoader(1, null, this);
     }
 
 //    @Override
