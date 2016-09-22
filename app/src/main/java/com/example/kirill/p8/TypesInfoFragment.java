@@ -23,7 +23,7 @@ public class TypesInfoFragment extends Fragment{
 
 
     public interface onTypesInfoItemClickListener {
-        public void onTypesInfoItemClick(AdapterView<?> parent, View view, int position, long id);
+        public void onTypesInfoItemClick(int position, long id);
     }
     onTypesInfoItemClickListener listener;
 
@@ -56,7 +56,7 @@ public class TypesInfoFragment extends Fragment{
         lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listener.onTypesInfoItemClick(parent,view,position,id);
+                listener.onTypesInfoItemClick(position,id);
             }
         });
         return v;

@@ -1,9 +1,12 @@
 package com.example.kirill.p8;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -13,7 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
-TypesInfoFragment.onTypesInfoItemClickListener, TypesInfoActivity.TypesInfoActivityListener {
+TypesInfoFragment.onTypesInfoItemClickListener {
     private int position;
     boolean withDetails = true;
 
@@ -40,22 +43,27 @@ TypesInfoFragment.onTypesInfoItemClickListener, TypesInfoActivity.TypesInfoActiv
 
     }
 
-//    void ShowNotes(){
-//        lvNotes=(ListView) findViewById(R.id.lvNotes);
-//        mNoteAdapter = new NoteAdapter(this, null, 0);
-//        lvNotes.setAdapter(mNoteAdapter);
-//        this.getSupportLoaderManager().initLoader(0, null, this);
-//    }
-
     void ShowTypeInfo(int typeID) {
+        FragmentTransaction fMan;
+        Fragment fragNotes, fragTypes,fragTypesInfo;
+
         String[] typeinfo=getTypeInfo(typeID);
+        fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
+        fragTypesInfo=TypesInfoFragment.newInstance(typeinfo);
+
         if (!withDetails) {
-            startActivity(new Intent(this, TypesInfoActivity.class).putExtra("typeinfo", typeinfo));
+            fragNotes = getSupportFragmentManager().findFragmentById(R.id.fragment_notes);
+            fragTypes = getSupportFragmentManager().findFragmentById(R.id.fragment_types);
+            fMan=getSupportFragmentManager().beginTransaction();
+            fMan.remove(fragNotes);
+            fMan.remove(fragTypes);
+            fMan.add(android.R.id.content, fragTypesInfo);
+            fMan.addToBackStack(null);
+            fMan.commit();
+
         }
         else {
-            TypesInfoFragment ti=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.typeinfo);
-            ti=TypesInfoFragment.newInstance(typeinfo);
-            getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, ti).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, fragTypesInfo).commit();
         }
     }
 
@@ -104,12 +112,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, TypesInfoActivity.TypesInfoActiv
     }
 
     @Override
-    public void onTypesInfoItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onTypesInfoItemClick(int position, long id) {
         Toast.makeText(this,"TypeInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onTypesInfoActivityItemClick(int position, long id) {
-        Toast.makeText(this,"TypeInfo activated!!! "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
     }
 }
