@@ -24,6 +24,13 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     }
     onItemClickListener listener;
 
+    public static TypesFragment newInstance() {
+        TypesFragment frmtTypes = new TypesFragment();
+//        Bundle args = new Bundle();
+//        args.putStringArray("typeinfo", typeInfo);
+//        ti.setArguments(args);
+        return frmtTypes;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

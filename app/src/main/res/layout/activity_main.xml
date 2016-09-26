@@ -6,19 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-    <fragment
+    <FrameLayout
         android:id="@+id/fragment_notes"
-        android:name="com.example.kirill.p8.NotesFragment"
         android:layout_width="match_parent"
         android:layout_height="400px"
         android:layout_weight="1">
-    </fragment>
-    <fragment
+    </FrameLayout>
+    <FrameLayout
         android:id="@+id/fragment_types"
-        android:name="com.example.kirill.p8.TypesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_below="@+id/fragment_notes">
-    </fragment>
+    </FrameLayout>
 </RelativeLayout>

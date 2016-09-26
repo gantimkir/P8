@@ -22,31 +22,28 @@ public class NotesFragment extends ListFragment implements LoaderManager.LoaderC
     }
     onItemClickListener listener;
 
+    public static NotesFragment newInstance() {
+        NotesFragment frmtNotes = new NotesFragment();
+//        Bundle args = new Bundle();
+//        args.putStringArray("typeinfo", typeInfo);
+//        ti.setArguments(args);
+        return frmtNotes;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         mAdapter = new NoteAdapter(getContext(), null, 0);
         setListAdapter(mAdapter);
         getActivity().getSupportLoaderManager().initLoader(0, null, this);
 
     }
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_types1, container, false);
-//    }
-
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         listener.NoteItemClick(position, id);
     }
-
 
     @Override
     public void onAttach(Context context) {

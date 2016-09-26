@@ -10,32 +10,43 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
+public class MainActivity extends ActionBarActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
 TypesInfoFragment.onTypesInfoItemClickListener {
     private int position;
-    boolean withDetails = true;
+    boolean withDetails = true,itSelected;
+    FragmentTransaction fMan;
+    Fragment fragNotes, fragTypes,fragTypesInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        itSelected=false;
         setContentView(R.layout.activity_main);
         withDetails = (findViewById(R.id.typeinfo) != null);
 
         if (savedInstanceState != null) {
             position = savedInstanceState.getInt("position");
+//            itSelected=savedInstanceState.getBoolean("itSelected");
         }
         else position=1;
-
         if (withDetails) {
             ShowTypeInfo(position);
         }
         else {
+            fragNotes=NotesFragment.newInstance();
+            fragTypes=TypesFragment.newInstance();
+            fMan=getSupportFragmentManager().beginTransaction();
+            fMan.add(R.id.fragment_notes, fragNotes);
+            fMan.add(R.id.fragment_types, fragTypes);
+            fMan.commit();
+
             if (savedInstanceState!=null) {
                 ShowTypeInfo(position);
             }
@@ -44,23 +55,18 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     }
 
     void ShowTypeInfo(int typeID) {
-        FragmentTransaction fMan;
-        Fragment fragNotes, fragTypes,fragTypesInfo;
-
+        itSelected=true;
         String[] typeinfo=getTypeInfo(typeID);
         fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
         fragTypesInfo=TypesInfoFragment.newInstance(typeinfo);
 
         if (!withDetails) {
-            fragNotes = getSupportFragmentManager().findFragmentById(R.id.fragment_notes);
-            fragTypes = getSupportFragmentManager().findFragmentById(R.id.fragment_types);
             fMan=getSupportFragmentManager().beginTransaction();
             fMan.remove(fragNotes);
             fMan.remove(fragTypes);
             fMan.add(android.R.id.content, fragTypesInfo);
             fMan.addToBackStack(null);
             fMan.commit();
-
         }
         else {
             getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, fragTypesInfo).commit();
@@ -94,9 +100,16 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("position", position);
+//        outState.putBoolean("itSelected",itSelected);
+
     }
 
     @Override
