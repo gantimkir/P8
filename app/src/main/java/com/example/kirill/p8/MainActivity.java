@@ -27,13 +27,13 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        itSelected=false;
+        itSelected=false;
         setContentView(R.layout.activity_main);
         withDetails = (findViewById(R.id.typeinfo) != null);
 
         if (savedInstanceState != null) {
             position = savedInstanceState.getInt("position");
-//            itSelected=savedInstanceState.getBoolean("itSelected");
+            itSelected=savedInstanceState.getBoolean("itSelected");
         }
         else position=1;
         if (withDetails) {
@@ -47,7 +47,7 @@ TypesInfoFragment.onTypesInfoItemClickListener {
             fMan.add(R.id.fragment_types, fragTypes);
             fMan.commit();
 
-            if (savedInstanceState!=null) {
+            if (savedInstanceState!=null & itSelected==true) {
                 ShowTypeInfo(position);
             }
         }
@@ -55,11 +55,9 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     }
 
     void ShowTypeInfo(int typeID) {
-        itSelected=true;
         String[] typeinfo=getTypeInfo(typeID);
         fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
         fragTypesInfo=TypesInfoFragment.newInstance(typeinfo);
-
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
             fMan.remove(fragNotes);
@@ -106,9 +104,20 @@ TypesInfoFragment.onTypesInfoItemClickListener {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        if (!withDetails) {
+            getSupportFragmentManager().popBackStack();
+        }
         super.onSaveInstanceState(outState);
         outState.putInt("position", position);
-//        outState.putBoolean("itSelected",itSelected);
+        outState.putBoolean("itSelected",itSelected);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (!withDetails) {
+            itSelected=false;
+        }
 
     }
 
@@ -116,6 +125,7 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     public void itemClick(int typeID, long id)
     {
         position=typeID;
+        itSelected=true;
         ShowTypeInfo(typeID);
     }
 
