@@ -36,7 +36,7 @@ public class TypesInfoAdapter extends CursorAdapter {
 
 	@Override
 	public View newView(Context ctx, Cursor cur, ViewGroup parent) {
-		View root = mInflater.inflate(R.layout.type_text, parent, false);
+		View root = mInflater.inflate(R.layout.typeinfo_text, parent, false);
 		ViewHolder holder = new ViewHolder();
 		TextView tvNumsort = (TextView)root.findViewById(R.id.tvNumsort);
 		TextView tvItemName = (TextView)root.findViewById(R.id.tvItemName);

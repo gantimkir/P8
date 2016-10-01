@@ -56,12 +56,13 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
 
         mAdapter = new TypesInfoAdapter(getContext(), null, 0);
         View v = inflater.inflate(R.layout.typeinfo_listview, container, false);
-        getActivity().getSupportLoaderManager().initLoader(0, null, this);
+        getActivity().getSupportLoaderManager().initLoader(2, null, this);
         ListView lvTypeInfo=(ListView) v.findViewById(R.id.lvName1);
         lvTypeInfo.setAdapter(mAdapter);
         lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 listener.onTypesInfoItemClick(position,id);
             }
         });
@@ -106,8 +107,8 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
                 getContext(),
                 ContractClass.TypeInfo.CONTENT_URI,
                 ContractClass.TypeInfo.DEFAULT_PROJECTION,
-                "type_id=?",
-                new String[] {getTypeID().toString()},
+                ContractClass.TypeInfo.COLUMN_NAME_TYPE_ID + "=?",
+                new String[] {"" + String.valueOf(getArguments().getInt("typeID"))},
                 null);
     }
 
@@ -121,6 +122,7 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
+
 }
 
 

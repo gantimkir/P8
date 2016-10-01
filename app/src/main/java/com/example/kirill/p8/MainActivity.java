@@ -125,9 +125,11 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     @Override
     public void itemClick(int typeID, long id)
     {
-        position=typeID;
+        position=(int)(long) id;
         itSelected=true;
-        ShowTypeInfo(typeID);
+        Toast.makeText(this,"Types activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+//        ShowTypeInfo(typeID);
+        ShowTypeInfo((int)(long) id);
     }
 
     @Override
