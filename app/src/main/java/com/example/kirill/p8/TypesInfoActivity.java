@@ -26,8 +26,8 @@ public class TypesInfoActivity extends FragmentActivity implements TypesInfoFrag
 
         setContentView(R.layout.typeinfo_activity);
         if (savedInstanceState == null) {
-            TypesInfoFragment details = TypesInfoFragment.newInstance(getIntent().getStringArrayExtra("typeinfo"));
-            getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+//            TypesInfoFragment details = TypesInfoFragment.newInstance(getIntent().getStringArrayExtra("typeinfo"));
+//            getSupportFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
         }
       this.listener=null;
     }

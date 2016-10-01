@@ -7,17 +7,14 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 
 public class TypesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
 //    private ListView lvItems;
-    private DataAdapter mAdapter;
+    private TypesAdapter mAdapter;
 
     public interface onItemClickListener {
         public void itemClick(int position,long id);
@@ -35,7 +32,7 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new DataAdapter(getContext(), null, 0);
+        mAdapter = new TypesAdapter(getContext(), null, 0);
         setListAdapter(mAdapter);
         getActivity().getSupportLoaderManager().initLoader(1, null, this);
     }

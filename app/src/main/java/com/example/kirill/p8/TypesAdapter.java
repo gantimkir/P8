@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class DataAdapter extends CursorAdapter {
+public class TypesAdapter extends CursorAdapter {
 	
 	private LayoutInflater mInflater;
 
-	public DataAdapter(Context context, Cursor c, int flags) {
+	public TypesAdapter(Context context, Cursor c, int flags) {
 		super(context, c, flags);
 		mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}

@@ -55,9 +55,9 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     }
 
     void ShowTypeInfo(int typeID) {
-        String[] typeinfo=getTypeInfo(typeID);
+//        String[] typeinfo=getTypeInfo(typeID);
         fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
-        fragTypesInfo=TypesInfoFragment.newInstance(typeinfo);
+        fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
             fMan.remove(fragNotes);
@@ -87,8 +87,9 @@ TypesInfoFragment.onTypesInfoItemClickListener {
                     String numsort = c.getString(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_NUMSORT));
                     String item_name = c.getString(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_ITEM_NAME));
                     Integer type_id = c.getInt(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_TYPE_ID));
+                    Integer typeinfo_id = c.getInt(c.getColumnIndex(ContractClass.TypeInfo._ID));
                     double mass_per_item = c.getDouble(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_MASS_PER_ITEM));
-                    typeinfo[i] = numsort + " " + item_name + " | " + mass_per_item + "|" + type_id;
+                    typeinfo[i] = numsort + " " + item_name + " | " + mass_per_item + "|" + type_id+"|"+typeinfo_id;
                     i++;
                 } while (c.moveToNext());
             }
