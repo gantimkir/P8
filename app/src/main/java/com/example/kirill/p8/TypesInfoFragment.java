@@ -56,7 +56,12 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
 
         mAdapter = new TypesInfoAdapter(getContext(), null, 0);
         View v = inflater.inflate(R.layout.typeinfo_listview, container, false);
-        getActivity().getSupportLoaderManager().initLoader(2, null, this);
+        if (getActivity().getSupportLoaderManager().getLoader(2)!=null){
+            getActivity().getSupportLoaderManager().restartLoader(2, null, this);
+        }else
+        {
+            getActivity().getSupportLoaderManager().initLoader(2, null, this);
+        }
         ListView lvTypeInfo=(ListView) v.findViewById(R.id.lvName1);
         lvTypeInfo.setAdapter(mAdapter);
         lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
