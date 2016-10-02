@@ -17,11 +17,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
-TypesInfoFragment.onTypesInfoItemClickListener {
+TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoItemClickListener {
     private int position;
     boolean withDetails = true,itSelected;
     FragmentTransaction fMan;
-    Fragment fragNotes, fragTypes,fragTypesInfo;
+    Fragment fragNotes, fragTypes,fragTypesInfo,fragTypeInfoEnter;
 
 
     @Override
@@ -55,7 +55,6 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     }
 
     void ShowTypeInfo(int typeID) {
-//        String[] typeinfo=getTypeInfo(typeID);
         fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
         fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
@@ -98,9 +97,32 @@ TypesInfoFragment.onTypesInfoItemClickListener {
         return typeinfo;
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    public String[] getEnterInfo(int typeinfoID) {
+        String[] typeinfoEnter = new String[5];
+        Cursor c = getContentResolver().query(
+                ContractClass.TypeInfo.CONTENT_URI,
+                ContractClass.TypeInfo.DEFAULT_PROJECTION,
+                ContractClass.TypeInfo._ID + "=?",
+                new String[]{String.valueOf(typeinfoID)},
+                null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                String numsort = c.getString(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_NUMSORT));
+                String item_name = c.getString(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_ITEM_NAME));
+                Integer type_id = c.getInt(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_TYPE_ID));
+                Integer typeinfo_id = c.getInt(c.getColumnIndex(ContractClass.TypeInfo._ID));
+                double mass_per_item = c.getDouble(c.getColumnIndex(ContractClass.TypeInfo.COLUMN_NAME_MASS_PER_ITEM));
+                typeinfoEnter[0] = numsort;typeinfoEnter[1] =item_name;
+                typeinfoEnter[2] = String.valueOf(type_id);typeinfoEnter[3] = String.valueOf(typeinfo_id);
+                typeinfoEnter[4] = String.valueOf(mass_per_item);
+            }
+            c.close();
+        } else {
+            typeinfoEnter[0] = "nothing";typeinfoEnter[1] ="nothing";
+            typeinfoEnter[2] = "nothing";typeinfoEnter[3] = "nothing";
+            typeinfoEnter[4] = "nothing";
+        }
+        return typeinfoEnter;
     }
 
     @Override
@@ -127,7 +149,7 @@ TypesInfoFragment.onTypesInfoItemClickListener {
     {
         position=typeID;//(int)(long) id;
         itSelected=true;
-        Toast.makeText(this,"Types activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"Types activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
 //        ShowTypeInfo(typeID);
         ShowTypeInfo(typeID);//((int)(long) id);
     }
@@ -139,6 +161,25 @@ TypesInfoFragment.onTypesInfoItemClickListener {
 
     @Override
     public void onTypesInfoItemClick(int position, long id) {
-        Toast.makeText(this,"TypeInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"TypeInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+
+        fragTypeInfoEnter=EnterInfoFragment.newInstance(getEnterInfo(position));
+//        if (!withDetails) {
+            fMan=getSupportFragmentManager().beginTransaction();
+//            fMan.remove(fragNotes);
+//            fMan.remove(fragTypes);
+            fMan.add(android.R.id.content, fragTypeInfoEnter);
+            fMan.addToBackStack(null);
+            fMan.commit();
+//        }
+//        else {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, fragTypesInfo).commit();
+//        }
+
+    }
+
+    @Override
+    public void onEnterInfoItemClick(int position, long id) {
+        Toast.makeText(this,"EnterInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
     }
 }

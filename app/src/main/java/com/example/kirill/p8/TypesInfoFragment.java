@@ -22,14 +22,6 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
     }
     onTypesInfoItemClickListener listener;
 
-//    public static TypesInfoFragment newInstance(String[] typeInfo) {
-//        TypesInfoFragment ti = new TypesInfoFragment();
-//        Bundle args = new Bundle();
-//        args.putStringArray("typeinfo", typeInfo);
-//        ti.setArguments(args);
-//        return ti;
-//    }
-
     public static TypesInfoFragment newInstance(int typeID) {
         TypesInfoFragment frmtTypesInfo = new TypesInfoFragment();
         Bundle args = new Bundle();
@@ -45,9 +37,6 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mAdapter = new TypesInfoAdapter(getContext(), null, 0);
-//        setListAdapter(mAdapter);
-//        getActivity().getSupportLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -71,32 +60,6 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
                 listener.onTypesInfoItemClick(position,id);
             }
         });
-//        lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                listener.onTypesInfoItemClick(position,id);
-//            }
-//        setListAdapter(mAdapter);
-//        getActivity().getSupportLoaderManager().initLoader(0, null, this);
-
-
-//        View v = inflater.inflate(R.layout.type_text_frag, container, false);
-//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-//                android.R.layout.simple_list_item_1);
-//        if(getTypeInfo() != null && getTypeInfo().length > 0) {
-//            arrayAdapter.addAll(getTypeInfo());
-//        }
-//        else {
-//            arrayAdapter.add("No typeinfo");
-//        }
-//        ListView lvTypeInfo=(ListView) v.findViewById(R.id.lvName1);
-//        lvTypeInfo.setAdapter(arrayAdapter);
-//        lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                listener.onTypesInfoItemClick(position,id);
-//            }
-//        });
         return v;
     }
 
