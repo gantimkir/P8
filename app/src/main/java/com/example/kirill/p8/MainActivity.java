@@ -30,6 +30,8 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         itSelected=false;
         setContentView(R.layout.activity_main);
         withDetails = (findViewById(R.id.typeinfo) != null);
+//        UNKNOWN ERROR!!!
+//        withDetails = getResources().getBoolean(R.bool.portrait_layout);
 
         if (savedInstanceState != null) {
             position = savedInstanceState.getInt("position");
@@ -55,7 +57,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     }
 
     void ShowTypeInfo(int typeID) {
-        fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
+//        fragTypesInfo=getSupportFragmentManager().findFragmentById(R.id.typeinfo);
         fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
