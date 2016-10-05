@@ -30,7 +30,7 @@ public class TypesAdapter extends CursorAdapter {
 			holder.tvName.setText(typeNumber);
 			holder.tvGOST.setText(typeGOST);
 			holder.tvId.setText(String.valueOf(id));
-			holder.classID = id-1;
+			holder.classID = id;
 		}
 	}
 

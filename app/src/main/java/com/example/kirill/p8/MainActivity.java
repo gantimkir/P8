@@ -108,7 +108,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
                     ContractClass.TypeInfo.CONTENT_URI,
                     ContractClass.TypeInfo.DEFAULT_PROJECTION,
                     ContractClass.TypeInfo._ID + "=?",
-                    new String[]{String.valueOf(typeinfoID+1)}, //Ha-ha-ha
+                    new String[]{String.valueOf(typeinfoID)}, //Ha-ha-ha
                     null);
             if (c != null) {
                 if (c.moveToFirst()) {
@@ -170,6 +170,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     @Override
     public void itemClick(int typeID, long id)
     {
+        Toast.makeText(this,"Type activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
         position=(int)(long) id;//(int)(long) id;
         itSelected=true;
         ShowTypeInfo((int)(long) id);//((int)(long) id);
@@ -182,6 +183,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
 
     @Override
     public void onTypesInfoItemClick(int position, long id) {
+        Toast.makeText(this,"TypeInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
         DialogFragment fragTypeInfoEnter=EnterInfoFragment.newInstance(getEnterInfo((int)(long) id));
         fragTypeInfoEnter.show(getSupportFragmentManager(), "fragTypeInfoEnter");
     }

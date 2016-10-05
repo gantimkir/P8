@@ -27,7 +27,7 @@ public class NoteAdapter extends CursorAdapter {
 		if(vNote != null) {
 			vNote.tvTitle.setText(noteTitle);
 			vNote.tvCreated.setText(noteCreated);
-			vNote.NoteID = id-1;
+			vNote.NoteID = id;
 		}
 	}
 

@@ -8,8 +8,16 @@
         android:id="@+id/tvNumsort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
+        android:layout_gravity="top|left"
         android:textSize="24sp"
+        android:layout_alignParentLeft="true">
+    </TextView>
+    <TextView
+        android:id="@+id/tvTypeInfoID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:textSize="14sp"
         android:layout_centerHorizontal="true">
     </TextView>
     <TextView

@@ -30,7 +30,8 @@ public class TypesInfoAdapter extends CursorAdapter {
 			holder.tvItemName.setText(typeinfoItemName);
 			holder.tvMassPerItem.setText(String.valueOf(typeinfoMassPerItem));
 			holder.tvTypeID.setText(String.valueOf(typeinfoTypeID));
-			holder.classID = id-1;
+			holder.tvTypeInfoID.setText(String.valueOf(id));
+			holder.classID = id;
 		}
 	}
 
@@ -42,10 +43,12 @@ public class TypesInfoAdapter extends CursorAdapter {
 		TextView tvItemName = (TextView)root.findViewById(R.id.tvItemName);
 		TextView tvMassPerItem = (TextView)root.findViewById(R.id.tvMassPerItem);
 		TextView tvTypeID = (TextView)root.findViewById(R.id.tvTypeID);
+		TextView tvTypeInfoID = (TextView)root.findViewById(R.id.tvTypeInfoID);
 		holder.tvNumsort = tvNumsort;
 		holder.tvItemName = tvItemName;
 		holder.tvMassPerItem = tvMassPerItem;
 		holder.tvTypeID = tvTypeID;
+		holder.tvTypeInfoID=tvTypeInfoID;
 		root.setTag(holder);
 		return root;
 	}
@@ -55,6 +58,7 @@ public class TypesInfoAdapter extends CursorAdapter {
 		public TextView tvItemName;
 		public TextView tvMassPerItem;
 		public TextView tvTypeID;
+		public TextView tvTypeInfoID;
 		public long classID;
 	}
 
