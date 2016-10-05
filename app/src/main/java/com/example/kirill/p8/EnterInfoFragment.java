@@ -1,13 +1,18 @@
 package com.example.kirill.p8;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 public class EnterInfoFragment extends DialogFragment {
@@ -25,6 +30,8 @@ public class EnterInfoFragment extends DialogFragment {
         args.putInt("type_id", Integer.valueOf(typeinfoEnter[2]));
         args.putInt("typeinfo_id", Integer.valueOf(typeinfoEnter[3]));
         args.putDouble("mass_per_item", Double.valueOf(typeinfoEnter[4]));
+        args.putString("name", typeinfoEnter[5]);
+        args.putString("gost", typeinfoEnter[6]);
         frmtEnterInfo.setArguments(args);
         return frmtEnterInfo;
     }
@@ -35,10 +42,30 @@ public class EnterInfoFragment extends DialogFragment {
         listener = (onEnterInfoItemClickListener) context;
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.enter_typeinfo, container, false);
-        return v;
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        RelativeLayout rltView=(RelativeLayout) inflater.inflate(R.layout.enter_typeinfo,null);
+
+        String strTemp=getArguments().getString("numsort"); TextView text = (TextView)rltView.findViewById(R.id.textViewNumSort);
+        text.setText("Num of sortament: " + strTemp);
+        strTemp=getArguments().getString("item_name"); text = (TextView)rltView.findViewById(R.id.textViewItemName);
+        text.setText("Item name: " + strTemp);
+        strTemp=String.valueOf(getArguments().getInt("type_id")); text = (TextView)rltView.findViewById(R.id.textViewTypeID);
+        text.setText("Type ID: " + strTemp);
+        strTemp=String.valueOf(getArguments().getInt("typeinfo_id")); text = (TextView)rltView.findViewById(R.id.textViewTypeInfoID);
+        text.setText("TypeInfo ID: " + strTemp);
+        strTemp=String.valueOf(getArguments().getDouble("mass_per_item")); text = (TextView)rltView.findViewById(R.id.textViewMassPerItem);
+        text.setText("Mass per item: " + strTemp);
+        strTemp=String.valueOf(getArguments().getString("name")); text = (TextView)rltView.findViewById(R.id.textViewTypeName);
+        text.setText("Type name: " + strTemp);
+        strTemp=String.valueOf(getArguments().getString("gost")); text = (TextView)rltView.findViewById(R.id.textViewTypeGOST);
+        text.setText("GOST: " + strTemp);
+
+        builder.setView(rltView);
+//        return super.onCreateDialog(savedInstanceState);
+        return builder.create();
     }
 }
