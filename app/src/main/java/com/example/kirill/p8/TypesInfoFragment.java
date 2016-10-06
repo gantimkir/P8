@@ -18,7 +18,7 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
     private TypesInfoAdapter mAdapter;
 
     public interface onTypesInfoItemClickListener {
-        public void onTypesInfoItemClick(int position, long id);
+        public void onTypesInfoItemClick(int position, long id, long classID);
     }
     onTypesInfoItemClickListener listener;
 
@@ -51,8 +51,8 @@ public class TypesInfoFragment extends Fragment implements LoaderManager.LoaderC
         lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                listener.onTypesInfoItemClick(position,id);
+                TypesInfoAdapter.ViewHolder vhldr=(TypesInfoAdapter.ViewHolder) view.getTag();
+                listener.onTypesInfoItemClick(position,id,vhldr.classID);
             }
         });
         return v;

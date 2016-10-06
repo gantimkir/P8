@@ -15,6 +15,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
@@ -168,28 +170,54 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     }
 
     @Override
-    public void itemClick(int typeID, long id)
+    public void itemClick(int position, long id, long classID)
     {
-        Toast.makeText(this,"Type activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
-        position=(int)(long) id;//(int)(long) id;
+        Toast.makeText(this,"Type activated. Position="+String.valueOf(position)+". ClassID="+String.valueOf(classID),Toast.LENGTH_SHORT).show();
+        position=(int)(long) classID;//(int)(long) id;
         itSelected=true;
-        ShowTypeInfo((int)(long) id);//((int)(long) id);
+        ShowTypeInfo((int)(long) classID);//((int)(long) id);
     }
 
     @Override
-    public void NoteItemClick(int typeID, long id){
-        Toast.makeText(this,"Note activated "+String.valueOf(typeID)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+    public void NoteItemClick(int position, long id, long noteID){
+        Toast.makeText(this,"TypeInfo activated. Position="+String.valueOf(position)+". NoteID="+String.valueOf(noteID),Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onTypesInfoItemClick(int position, long id) {
-        Toast.makeText(this,"TypeInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
-        DialogFragment fragTypeInfoEnter=EnterInfoFragment.newInstance(getEnterInfo((int)(long) id));
+    public void onTypesInfoItemClick(int position, long id, long classID) {
+        Toast.makeText(this,"TypeInfo activated. Position="+String.valueOf(position)+". ClassID="+String.valueOf(classID),Toast.LENGTH_SHORT).show();
+        DialogFragment fragTypeInfoEnter=EnterInfoFragment.newInstance(getEnterInfo((int)(long) classID));
         fragTypeInfoEnter.show(getSupportFragmentManager(), "fragTypeInfoEnter");
     }
 
+
     @Override
-    public void onEnterInfoItemClick(int position, long id) {
-        Toast.makeText(this,"EnterInfo activated "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
+    public void onDialogPositiveClick(EnterInfoFragment dialog, Bundle args) {
+        String strTemp=args.getString("numsort"); //TextView text = (TextView)rltView.findViewById(R.id.textViewNumSort);
+//        text.setText("Num of sortament: " + strTemp);
+//        strTemp=getArguments().getString("item_name"); text = (TextView)rltView.findViewById(R.id.textViewItemName);
+//        text.setText("Item name: " + strTemp);
+//        strTemp=String.valueOf(getArguments().getInt("type_id")); text = (TextView)rltView.findViewById(R.id.textViewTypeID);
+//        text.setText("Type ID: " + strTemp);
+//        strTemp=String.valueOf(getArguments().getInt("typeinfo_id")); text = (TextView)rltView.findViewById(R.id.textViewTypeInfoID);
+//        text.setText("TypeInfo ID: " + strTemp);
+//        strTemp=String.valueOf(getArguments().getDouble("mass_per_item")); text = (TextView)rltView.findViewById(R.id.textViewMassPerItem);
+//        text.setText("Mass per item: " + strTemp);
+//        strTemp=String.valueOf(getArguments().getString("name")); text = (TextView)rltView.findViewById(R.id.textViewTypeName);
+//        text.setText("Type name: " + strTemp);
+//        strTemp=String.valueOf(getArguments().getString("gost")); text = (TextView)rltView.findViewById(R.id.textViewTypeGOST);
+//        text.setText("GOST: " + strTemp);
+        Toast.makeText(this,"Positive activated. dblTotal="+String.valueOf(dialog.dblTotal)+". From Bundle strTemp="+strTemp,Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onDialogNegativeClick(EnterInfoFragment dialog) {
+        Toast.makeText(this,"Negative activated. dblTotal="+String.valueOf(dialog.dblTotal),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDialogNeutralClick(EnterInfoFragment dialog) {
+        Toast.makeText(this,"Neutral activated. dblTotal="+String.valueOf(dialog.dblTotal),Toast.LENGTH_SHORT).show();
+    }
+
 }

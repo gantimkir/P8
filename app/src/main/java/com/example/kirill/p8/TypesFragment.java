@@ -15,7 +15,7 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     private TypesAdapter mAdapter;
 
     public interface onItemClickListener {
-        public void itemClick(int position,long id);
+        public void itemClick(int position,long id, long classID);
     }
     onItemClickListener listener;
 
@@ -35,7 +35,9 @@ public class TypesFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        listener.itemClick(position, id);
+        TypesAdapter.ViewHolder vhldr = (TypesAdapter.ViewHolder) v.getTag();
+        Long classID= vhldr.classID;
+        listener.itemClick(position, id,classID);
     }
 
     @Override

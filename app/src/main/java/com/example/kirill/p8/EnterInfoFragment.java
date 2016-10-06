@@ -3,6 +3,7 @@ package com.example.kirill.p8;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,14 +12,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class EnterInfoFragment extends DialogFragment {
-
+    public Double dblTotal=0.0;
+    public String strNumSort="";
     public interface onEnterInfoItemClickListener {
-        public void onEnterInfoItemClick(int position, long id);
+            public void onDialogPositiveClick(EnterInfoFragment dialog, Bundle args);
+            public void onDialogNegativeClick(EnterInfoFragment dialog);
+            public void onDialogNeutralClick(EnterInfoFragment dialog);
     }
     onEnterInfoItemClickListener listener;
 
@@ -64,8 +70,39 @@ public class EnterInfoFragment extends DialogFragment {
         strTemp=String.valueOf(getArguments().getString("gost")); text = (TextView)rltView.findViewById(R.id.textViewTypeGOST);
         text.setText("GOST: " + strTemp);
 
+        builder.setTitle("Enter form");
+
+        builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                listener.onDialogPositiveClick(EnterInfoFragment.this, getArguments());
+
+            }
+        });
+        builder.setNegativeButton("NEXT", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                listener.onDialogNegativeClick(EnterInfoFragment.this);
+            }
+        });
+        builder.setNeutralButton("PREVIOUS", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                listener.onDialogNeutralClick(EnterInfoFragment.this);
+            }
+        });
+
+        final EditText editText=(EditText) rltView.findViewById(R.id.editTextQuantity);
+        editText.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(),"Ha-ha-ha",Toast.LENGTH_SHORT).show();
+                        dblTotal=Double.valueOf(editText.getText().toString());
+                    }
+                }
+        );
+
         builder.setView(rltView);
 //        return super.onCreateDialog(savedInstanceState);
         return builder.create();
     }
+
 }

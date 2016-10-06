@@ -18,7 +18,7 @@ public class NotesFragment extends ListFragment implements LoaderManager.LoaderC
 //    private View previous;
 
     public interface onItemClickListener {
-        public void NoteItemClick(int position, long id);
+        public void NoteItemClick(int position, long id, long noteID);
     }
     onItemClickListener listener;
 
@@ -42,7 +42,8 @@ public class NotesFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        listener.NoteItemClick(position, id);
+        NoteAdapter.ViewNote vnt= (NoteAdapter.ViewNote) v.getTag();
+        listener.NoteItemClick(position, id,vnt.NoteID);
     }
 
     @Override

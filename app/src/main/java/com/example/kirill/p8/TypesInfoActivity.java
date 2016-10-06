@@ -33,7 +33,7 @@ public class TypesInfoActivity extends FragmentActivity implements TypesInfoFrag
     }
 
     @Override
-    public void onTypesInfoItemClick(int position, long id) {
+    public void onTypesInfoItemClick(int position, long id,long classID) {
 //        listener.onTypesInfoActivityItemClick(position,id);
         Toast.makeText(this,"TypeInfo activated from TypesInfoActivity "+String.valueOf(position)+" "+String.valueOf(id),Toast.LENGTH_SHORT).show();
 
