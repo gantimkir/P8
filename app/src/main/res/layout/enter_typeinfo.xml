@@ -7,10 +7,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Type name:"
+        android:id="@+id/textViewTypeName"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="GOST:"
+        android:id="@+id/textViewTypeGOST"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/textViewNumSort"
         android:text="Num of sortament"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textViewTypeName"
         android:layout_alignParentStart="true"
         android:textStyle="bold" />
 
@@ -22,6 +39,7 @@
         android:id="@+id/textViewItemName"
         android:layout_alignParentStart="false"
         android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textViewTypeName"
         android:textStyle="bold"
         android:textIsSelectable="true" />
 
@@ -46,52 +64,70 @@
         android:layout_alignParentBottom="false"
         android:layout_alignParentEnd="true" />
 
+    <Switch
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Select mode"
+    android:id="@+id/switchMode"
+    android:layout_below="@+id/textViewTypeID"
+    android:nestedScrollingEnabled="false"
+    android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Mass per item:"
         android:id="@+id/textViewMassPerItem"
-        android:layout_below="@+id/textViewTypeInfoID"
+        android:layout_below="@+id/switchMode"
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:inputType="numberDecimal"
+    android:ems="10"
+    android:id="@+id/editTextItemQuantity"
+    android:layout_below="@+id/textViewMassPerItem"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentEnd="false" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total:"
-        android:id="@+id/textViewTotal"
+        android:id="@+id/textViewTotalMassPerItem"
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/editTextQuantity" />
+        android:layout_below="@+id/editTextItemQuantity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Item per mass:"
+        android:id="@+id/textViewItemPerMass"
+        android:layout_below="@+id/textViewTotalMassPerItem"
+        android:layout_centerHorizontal="true" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/editTextQuantity"
-        android:layout_below="@+id/textViewMassPerItem"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentEnd="false" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:inputType="numberDecimal"
+    android:ems="10"
+    android:id="@+id/editTextMassQuantity"
+    android:layout_below="@+id/textViewItemPerMass"
+    android:layout_centerHorizontal="true" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Type name:"
-        android:id="@+id/textViewTypeName"
-        android:layout_below="@+id/textViewTotal"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="true" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Total:"
+    android:id="@+id/textViewTotalItemPerMass"
+    android:layout_below="@+id/editTextMassQuantity"
+    android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="GOST:"
-        android:id="@+id/textViewTypeGOST"
-        android:layout_below="@+id/textViewTotal"
-        android:layout_alignParentEnd="true" />
 </RelativeLayout>

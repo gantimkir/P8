@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,16 +87,36 @@ public class EnterInfoFragment extends DialogFragment {
             }
         });
 
-        final EditText editText=(EditText) rltView.findViewById(R.id.editTextQuantity);
-        editText.setOnClickListener(
+        final EditText editText1=(EditText) rltView.findViewById(R.id.editTextItemQuantity);
+        editText1.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(),"Ha-ha-ha",Toast.LENGTH_SHORT).show();
-                        dblTotal=Double.valueOf(editText.getText().toString());
+                        Toast.makeText(getActivity(),"Mode #1 Render",Toast.LENGTH_SHORT).show();
+                        dblTotal=Double.valueOf(editText1.getText().toString());
                     }
                 }
         );
+
+        final EditText editText2=(EditText) rltView.findViewById(R.id.editTextMassQuantity);
+        editText2.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(),"Mode #2 Render",Toast.LENGTH_SHORT).show();
+                        dblTotal=Double.valueOf(editText2.getText().toString());
+                    }
+                }
+        );
+
+        final Switch swtchMode=(Switch) rltView.findViewById(R.id.switchMode);
+        swtchMode.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(),"Mode was changed",Toast.LENGTH_SHORT).show();
+                    }
+                }        );
 
         builder.setView(rltView);
 //        return super.onCreateDialog(savedInstanceState);
