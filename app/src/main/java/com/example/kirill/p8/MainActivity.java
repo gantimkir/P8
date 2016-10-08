@@ -207,17 +207,17 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
 //        text.setText("Type name: " + strTemp);
 //        strTemp=String.valueOf(getArguments().getString("gost")); text = (TextView)rltView.findViewById(R.id.textViewTypeGOST);
 //        text.setText("GOST: " + strTemp);
-        Toast.makeText(this,"Positive activated. dblTotal="+String.valueOf(dialog.dblTotal)+". From Bundle strTemp="+strTemp,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Positive activated. dblTotal="+String.valueOf(dialog.dblTotalMassPerItem)+". From Bundle strTemp="+strTemp,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDialogNegativeClick(EnterInfoFragment dialog) {
-        Toast.makeText(this,"Negative activated. dblTotal="+String.valueOf(dialog.dblTotal),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Negative activated. dblTotal="+String.valueOf(dialog.dblTotalMassPerItem),Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDialogNeutralClick(EnterInfoFragment dialog) {
-        Toast.makeText(this,"Neutral activated. dblTotal="+String.valueOf(dialog.dblTotal),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Neutral activated. dblTotal="+String.valueOf(dialog.dblTotalMassPerItem),Toast.LENGTH_SHORT).show();
     }
 
 }
