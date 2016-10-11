@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 
 public class EnterInfoFragment extends DialogFragment {
-    public Double dblTotal=0.0;
+    public Double dblTotalMassPerItem=0.0;
+    public Double dblTotalItemPerMass=0.0;
+    public Double dblMassPerItem=0.0;
     public String strNumSort="";
     public interface onEnterInfoItemClickListener {
             public void onDialogPositiveClick(EnterInfoFragment dialog, Bundle args);
@@ -51,22 +53,25 @@ public class EnterInfoFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        RelativeLayout rltView=(RelativeLayout) inflater.inflate(R.layout.enter_typeinfo,null);
+        final RelativeLayout rltView=(RelativeLayout) inflater.inflate(R.layout.enter_typeinfo,null);
 
         String strTemp=getArguments().getString("numsort"); TextView text = (TextView)rltView.findViewById(R.id.textViewNumSort);
         text.setText("Num of sortament: " + strTemp);
         strTemp=getArguments().getString("item_name"); text = (TextView)rltView.findViewById(R.id.textViewItemName);
         text.setText("Item name: " + strTemp);
+        final String strItemName=strTemp;
         strTemp=String.valueOf(getArguments().getInt("type_id")); text = (TextView)rltView.findViewById(R.id.textViewTypeID);
         text.setText("Type ID: " + strTemp);
         strTemp=String.valueOf(getArguments().getInt("typeinfo_id")); text = (TextView)rltView.findViewById(R.id.textViewTypeInfoID);
         text.setText("TypeInfo ID: " + strTemp);
         strTemp=String.valueOf(getArguments().getDouble("mass_per_item")); text = (TextView)rltView.findViewById(R.id.textViewMassPerItem);
         text.setText("Mass per item: " + strTemp);
+        dblMassPerItem=Double.parseDouble(strTemp);
         strTemp=String.valueOf(getArguments().getString("name")); text = (TextView)rltView.findViewById(R.id.textViewTypeName);
         text.setText("Type name: " + strTemp);
         strTemp=String.valueOf(getArguments().getString("gost")); text = (TextView)rltView.findViewById(R.id.textViewTypeGOST);
         text.setText("GOST: " + strTemp);
+
 
         builder.setTitle("Enter form");
 
@@ -87,24 +92,30 @@ public class EnterInfoFragment extends DialogFragment {
             }
         });
 
-        final EditText editText1=(EditText) rltView.findViewById(R.id.editTextItemQuantity);
-        editText1.setOnClickListener(
+        final EditText editTextItemQuantity=(EditText) rltView.findViewById(R.id.editTextItemQuantity);
+        editTextItemQuantity.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getActivity(),"Mode #1 Render",Toast.LENGTH_SHORT).show();
-                        dblTotal=Double.valueOf(editText1.getText().toString());
+                        dblTotalMassPerItem=Double.valueOf(editTextItemQuantity.getText().toString())*dblMassPerItem;
+                        TextView txtTotalMassPerItem=(TextView) rltView.findViewById(R.id.textViewTotalMassPerItem);
+                        String strTemp=String.format("%1$,.2f",dblTotalMassPerItem)+" kg";
+                        txtTotalMassPerItem.setText(strTemp);
                     }
                 }
         );
 
-        final EditText editText2=(EditText) rltView.findViewById(R.id.editTextMassQuantity);
-        editText2.setOnClickListener(
+        final EditText editTextMassQuantity=(EditText) rltView.findViewById(R.id.editTextMassQuantity);
+        editTextMassQuantity.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getActivity(),"Mode #2 Render",Toast.LENGTH_SHORT).show();
-                        dblTotal=Double.valueOf(editText2.getText().toString());
+                        dblTotalItemPerMass=Double.valueOf(editTextMassQuantity.getText().toString())/dblMassPerItem;
+                        TextView txtTotalItemPerMass=(TextView) rltView.findViewById(R.id.textViewTotalItemPerMass);
+                        String strTemp=String.format("%1$,.3f",dblTotalItemPerMass)+" "+strItemName;
+                        txtTotalItemPerMass.setText(strTemp);
                     }
                 }
         );
