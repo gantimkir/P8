@@ -81,7 +81,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     }
 
     void ShowTypeInfo(int typeID) {
-        Toast.makeText(this, "ShowTypeInfo typeID="+String.valueOf(typeID), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ShowTypeInfo. typeID="+String.valueOf(typeID), Toast.LENGTH_SHORT).show();
         fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
