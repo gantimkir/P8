@@ -5,18 +5,35 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
-    <FrameLayout
-        android:id="@+id/fragment_notes"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:layout_weight="1">
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/fragment_types"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_below="@+id/fragment_notes">
-    </FrameLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/my_toolbar">
+
+            <FrameLayout
+                android:id="@+id/fragment_types"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+            </FrameLayout>
+
+        </RelativeLayout>
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fragment_notes"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="400px"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_below="@+id/my_toolbar">-->
+    <!--</FrameLayout>-->
+
 </RelativeLayout>

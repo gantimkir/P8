@@ -1,25 +1,18 @@
 package com.example.kirill.p8;
 
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
+public class MainActivity extends AppCompatActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
 TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoItemClickListener {
     private int position;
     boolean withDetails = true,itSelected;
@@ -40,15 +33,15 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
             position = savedInstanceState.getInt("position");
             itSelected=savedInstanceState.getBoolean("itSelected");
         }
-        else position=2;
+        else
         if (withDetails) {
             ShowTypeInfo(position);
         }
         else {
-            fragNotes=NotesFragment.newInstance();
+//            fragNotes=NotesFragment.newInstance();
             fragTypes=TypesFragment.newInstance();
             fMan=getSupportFragmentManager().beginTransaction();
-            fMan.add(R.id.fragment_notes, fragNotes);
+//            fMan.add(R.id.fragment_notes, fragNotes);
             fMan.add(R.id.fragment_types, fragTypes);
             fMan.commit();
 
@@ -56,16 +49,46 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
                 ShowTypeInfo(position);
             }
         }
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
+//         Get a support ActionBar corresponding to this toolbar
+//        ActionBar ab = getSupportActionBar();
+//
+//        // Enable the Up button
+//        ab.setDisplayHomeAsUpEnabled(true);
+//        ab.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu1, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.miCompose:
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     void ShowTypeInfo(int typeID) {
+        Toast.makeText(this, "ShowTypeInfo typeID="+String.valueOf(typeID), Toast.LENGTH_SHORT).show();
         fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
-            fMan.remove(fragNotes);
-            fMan.remove(fragTypes);
-            fMan.add(android.R.id.content, fragTypesInfo);
+//            fMan.remove(fragNotes);
+//            fMan.remove(fragTypes);
+//            fMan.add(android.R.id.content, fragTypesInfo);
+            fMan.replace(R.id.fragment_types,fragTypesInfo);
             fMan.addToBackStack(null);
             fMan.commit();
         }
@@ -152,12 +175,13 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("position", position);
+        outState.putBoolean("itSelected",itSelected);
         if (!withDetails) {
             getSupportFragmentManager().popBackStack();
         }
         super.onSaveInstanceState(outState);
-        outState.putInt("position", position);
-        outState.putBoolean("itSelected",itSelected);
+
     }
 
     @Override
@@ -170,9 +194,9 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     }
 
     @Override
-    public void itemClick(int position, long id, long classID)
+    public void itemClick(int pos, long id, long classID)
     {
-        Toast.makeText(this,"Type activated. Position="+String.valueOf(position)+". ClassID="+String.valueOf(classID),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Type activated. Position="+String.valueOf(pos)+". ClassID="+String.valueOf(classID),Toast.LENGTH_SHORT).show();
         position=(int)(long) classID;//(int)(long) id;
         itSelected=true;
         ShowTypeInfo((int)(long) classID);//((int)(long) id);
@@ -180,12 +204,12 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
 
     @Override
     public void NoteItemClick(int position, long id, long noteID){
-        Toast.makeText(this,"TypeInfo activated. Position="+String.valueOf(position)+". NoteID="+String.valueOf(noteID),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Note activated. Position="+String.valueOf(position)+". NoteID="+String.valueOf(noteID),Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onTypesInfoItemClick(int position, long id, long classID) {
-        Toast.makeText(this,"TypeInfo activated. Position="+String.valueOf(position)+". ClassID="+String.valueOf(classID),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"TypeInfo activated. Position="+String.valueOf(position)+". ClassID="+String.valueOf(classID),Toast.LENGTH_SHORT).show();
         DialogFragment fragTypeInfoEnter=EnterInfoFragment.newInstance(getEnterInfo((int)(long) classID));
         fragTypeInfoEnter.show(getSupportFragmentManager(), "fragTypeInfoEnter");
     }
