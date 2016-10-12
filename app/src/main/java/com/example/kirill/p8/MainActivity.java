@@ -5,7 +5,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,7 +16,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     private int position;
     boolean withDetails = true,itSelected;
     FragmentTransaction fMan;
-    Fragment fragNotes, fragTypes,fragTypesInfo,fragTypeInfoEnter;
+    Fragment fragNotes, fragTypes,fragTypesInfo;
 
 
     @Override
@@ -33,36 +32,25 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
             position = savedInstanceState.getInt("position");
             itSelected=savedInstanceState.getBoolean("itSelected");
         }
-        else
+
         if (withDetails) {
             ShowTypeInfo(position);
         }
         else {
-//            fragNotes=NotesFragment.newInstance();
             fragTypes=TypesFragment.newInstance();
             fMan=getSupportFragmentManager().beginTransaction();
-//            fMan.add(R.id.fragment_notes, fragNotes);
             fMan.add(R.id.fragment_types, fragTypes);
             fMan.commit();
-
             if (savedInstanceState!=null & itSelected==true) {
                 ShowTypeInfo(position);
             }
         }
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
-//         Get a support ActionBar corresponding to this toolbar
-//        ActionBar ab = getSupportActionBar();
-//
-//        // Enable the Up button
-//        ab.setDisplayHomeAsUpEnabled(true);
-//        ab.show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        return super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu1, menu);
         return true;
     }
@@ -71,6 +59,20 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miCompose:
+                fragNotes=NotesFragment.NewInstance();
+                fragTypesInfo=TypesInfoFragment.newInstance(typeID);
+//                if (!withDetails) {
+//                    fMan=getSupportFragmentManager().beginTransaction();
+//                      fMan.remove(fragNotes);
+//                      fMan.remove(fragTypes);
+//                      fMan.add(android.R.id.content, fragTypesInfo);
+//                    fMan.replace(R.id.fragment_types,fragTypesInfo);
+//                    fMan.addToBackStack(null);
+//                    fMan.commit();
+//                }
+//                else {
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, fragTypesInfo).commit();
+//                }
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
             default:
