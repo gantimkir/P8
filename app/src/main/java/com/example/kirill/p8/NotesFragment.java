@@ -50,24 +50,24 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
         {
             getActivity().getSupportLoaderManager().initLoader(0, null, this);
         }
-        ListView lvTypeInfo=(ListView) v.findViewById(R.id.lvNotes);
-        lvTypeInfo.setAdapter(mAdapter);
-        lvTypeInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView lvNotes=(ListView) v.findViewById(R.id.lvNotes);
+        lvNotes.setAdapter(mAdapter);
+        lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TypesInfoAdapter.ViewHolder vhldr=(TypesInfoAdapter.ViewHolder) view.getTag();
-                listener.NoteItemClick(position,id,vhldr.classID);
+                NoteAdapter.ViewNote vhldr=(NoteAdapter.ViewNote) view.getTag();
+                listener.NoteItemClick(position,id,vhldr.NoteID);
             }
         });
         return v;
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        NoteAdapter.ViewNote vnt= (NoteAdapter.ViewNote) v.getTag();
-        listener.NoteItemClick(position, id,vnt.NoteID);
-    }
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
+//        super.onListItemClick(l, v, position, id);
+//        NoteAdapter.ViewNote vnt= (NoteAdapter.ViewNote) v.getTag();
+//        listener.NoteItemClick(position, id,vnt.NoteID);
+//    }
 
     @Override
     public void onAttach(Context context) {

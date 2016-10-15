@@ -34,6 +34,10 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         }
 
         if (withDetails) {
+            fragTypes=TypesFragment.newInstance();
+            fMan=getSupportFragmentManager().beginTransaction();
+            fMan.add(R.id.fragment_types, fragTypes);
+            fMan.commit();
             ShowTypeInfo(position);
         }
         else {
@@ -59,20 +63,20 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.miCompose:
-                fragNotes=NotesFragment.NewInstance();
-                fragTypesInfo=TypesInfoFragment.newInstance(typeID);
-//                if (!withDetails) {
-//                    fMan=getSupportFragmentManager().beginTransaction();
-//                      fMan.remove(fragNotes);
-//                      fMan.remove(fragTypes);
-//                      fMan.add(android.R.id.content, fragTypesInfo);
-//                    fMan.replace(R.id.fragment_types,fragTypesInfo);
-//                    fMan.addToBackStack(null);
-//                    fMan.commit();
-//                }
-//                else {
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, fragTypesInfo).commit();
-//                }
+                fragNotes=NotesFragment.newInstance();
+//                fragTypesInfo=TypesInfoFragment.newInstance(typeID);
+                if (!withDetails) {
+                }
+                else {
+                    fragTypes = (TypesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_types);
+                    fragTypesInfo=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.typeinfo);
+                    fMan=getSupportFragmentManager().beginTransaction();
+                    fMan.remove(fragTypes);
+                    fMan.remove(fragTypesInfo);
+                    fMan.add(R.id.fragment_land_canvas, fragNotes);
+                    fMan.addToBackStack(null);
+                    fMan.commit();
+                }
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
             default:
