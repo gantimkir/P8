@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements TypesFragment.onItemClickListener,NotesFragment.onItemClickListener,
 TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoItemClickListener {
-    private int position;
-    boolean withDetails = true,itSelected;
+    private int position=1;
+    boolean withDetails = true,itSelected,withNotes=false;
     FragmentTransaction fMan;
     Fragment fragNotes, fragTypes,fragTypesInfo;
 
@@ -64,15 +64,15 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         switch (item.getItemId()) {
             case R.id.miCompose:
                 fragNotes=NotesFragment.newInstance();
-                fMan=getSupportFragmentManager().beginTransaction();
                 if (!withDetails) {
-                    if (fragTypes.isVisible()==true) {
+                    fMan=getSupportFragmentManager().beginTransaction();
+                    if (fragTypes.isVisible()) {
                         fMan.remove(fragTypes);
                     }
                     else {
                         fMan.remove(fragTypesInfo);
                     }
-                    fMan.add(R.id.fragment_canvas, fragNotes);
+                    fMan.add(R.id.fragment_canvas, fragNotes,"notes");
                     fMan.addToBackStack(null);
                     fMan.commit();
                 }
@@ -82,7 +82,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
                     fMan=getSupportFragmentManager().beginTransaction();
                     fMan.remove(fragTypes);
                     fMan.remove(fragTypesInfo);
-                    fMan.add(R.id.fragment_canvas, fragNotes);
+                    fMan.add(R.id.fragment_canvas_l, fragNotes,"notes");
                     fMan.addToBackStack(null);
                     fMan.commit();
                 }
@@ -96,7 +96,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
     }
 
     void ShowTypeInfo(int typeID) {
-        Toast.makeText(this, "ShowTypeInfo. typeID="+String.valueOf(typeID), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "ShowTypeInfo. typeID="+String.valueOf(typeID), Toast.LENGTH_SHORT).show();
         fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
