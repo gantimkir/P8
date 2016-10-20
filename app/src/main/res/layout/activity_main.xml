@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/my_toolbar"
-            android:id="@+id/fragment_port_canvas">
+            android:id="@+id/fragment_canvas">
             <FrameLayout
                 android:id="@+id/fragment_types"
                 android:layout_width="match_parent"
@@ -27,12 +27,4 @@
                 android:layout_weight="1">
             </FrameLayout>
         </RelativeLayout>
-    <!--<FrameLayout-->
-        <!--android:id="@+id/fragment_notes"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="400px"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_below="@+id/my_toolbar">-->
-    <!--</FrameLayout>-->
-
 </RelativeLayout>

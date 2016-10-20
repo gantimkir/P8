@@ -24,7 +24,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         super.onCreate(savedInstanceState);
         itSelected=false;
         setContentView(R.layout.activity_main);
-        withDetails = (findViewById(R.id.typeinfo) != null);
+        withDetails = (findViewById(R.id.fragment_typeinfo) != null);
 //        UNKNOWN ERROR!!!
 //        withDetails = getResources().getBoolean(R.bool.portrait_layout);
 
@@ -64,21 +64,25 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         switch (item.getItemId()) {
             case R.id.miCompose:
                 fragNotes=NotesFragment.newInstance();
+                fMan=getSupportFragmentManager().beginTransaction();
                 if (!withDetails) {
-                    fragTypes = (TypesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_types);
-                    fMan=getSupportFragmentManager().beginTransaction();
-                    fMan.remove(fragTypes);
-                    fMan.add(R.id.fragment_port_canvas, fragNotes);
+                    if (fragTypes.isVisible()==true) {
+                        fMan.remove(fragTypes);
+                    }
+                    else {
+                        fMan.remove(fragTypesInfo);
+                    }
+                    fMan.add(R.id.fragment_canvas, fragNotes);
                     fMan.addToBackStack(null);
                     fMan.commit();
                 }
                 else {
                     fragTypes = (TypesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_types);
-                    fragTypesInfo=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.typeinfo);
+                    fragTypesInfo=(TypesInfoFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_typeinfo);
                     fMan=getSupportFragmentManager().beginTransaction();
                     fMan.remove(fragTypes);
                     fMan.remove(fragTypesInfo);
-                    fMan.add(R.id.fragment_land_canvas, fragNotes);
+                    fMan.add(R.id.fragment_canvas, fragNotes);
                     fMan.addToBackStack(null);
                     fMan.commit();
                 }
@@ -101,7 +105,7 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
             fMan.commit();
         }
         else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.typeinfo, fragTypesInfo).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_typeinfo, fragTypesInfo).commit();
         }
     }
 
