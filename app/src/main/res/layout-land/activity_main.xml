@@ -22,17 +22,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/my_toolbar"
         android:id="@+id/fragment_land_canvas">
-        <!--<fragment-->
-            <!--android:id="@+id/fragment_notes1"-->
-            <!--android:name="com.example.kirill.p8.NotesFragment"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_alignParentLeft="false">-->
-        <!--</fragment>-->
         <FrameLayout
             android:id="@+id/fragment_types"
-            android:name="com.example.kirill.p8.TypesFragment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1">

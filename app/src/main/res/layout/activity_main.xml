@@ -18,15 +18,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/my_toolbar">
-
+            android:layout_below="@+id/my_toolbar"
+            android:id="@+id/fragment_port_canvas">
             <FrameLayout
                 android:id="@+id/fragment_types"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
             </FrameLayout>
-
         </RelativeLayout>
     <!--<FrameLayout-->
         <!--android:id="@+id/fragment_notes"-->

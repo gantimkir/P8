@@ -66,17 +66,19 @@ public final class ContractClass {
 		public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_NOTES_ID);
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.kirill.notes";
 		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.kirill.notes";
-		public static final String DEFAULT_SORT_ORDER = "modified DESC";
-		public static final String COLUMN_TITLE   = "title";
+		public static final String DEFAULT_SORT_ORDER = "_id ASC";
+		public static final String COLUMN_TYPE_ID   = "type_id";
+		public static final String COLUMN_TYPEINFO_ID   = "typeinfo_id";
+		public static final String COLUMN_QUANTITY1   = "quantity1";
+		public static final String COLUMN_QUANTITY2   = "quantity2";
 		public static final String COLUMN_NOTE   = "note";
-		public static final String COLUMN_CREATED_DATE = "created";
-		public static final String COLUMN_MODIFIED_DATE = "modified";
 		public static final String[] DEFAULT_PROJECTION = new String[] {
 				ContractClass.Notes._ID,
-				ContractClass.Notes.COLUMN_TITLE,
+				ContractClass.Notes.COLUMN_TYPE_ID,
+				ContractClass.Notes.COLUMN_TYPEINFO_ID,
+				ContractClass.Notes.COLUMN_QUANTITY1,
+				ContractClass.Notes.COLUMN_QUANTITY2,
 				ContractClass.Notes.COLUMN_NOTE,
-				ContractClass.Notes.COLUMN_CREATED_DATE,
-				ContractClass.Notes.COLUMN_MODIFIED_DATE
 		};
 	}
 }

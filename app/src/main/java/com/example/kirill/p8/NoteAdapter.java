@@ -21,12 +21,18 @@ public class NoteAdapter extends CursorAdapter {
 	@Override
 	public void bindView(View view, Context ctx, Cursor cur) {
 		long id = cur.getLong(cur.getColumnIndex(ContractClass.Notes._ID));
-		String noteTitle = cur.getString(cur.getColumnIndex(ContractClass.Notes.COLUMN_TITLE));
-		String noteCreated = cur.getString(cur.getColumnIndex(ContractClass.Notes.COLUMN_CREATED_DATE));
+		Integer noteType_ID = cur.getInt(cur.getColumnIndex(ContractClass.Notes.COLUMN_TYPE_ID));
+		Integer noteTypeInfo_ID = cur.getInt(cur.getColumnIndex(ContractClass.Notes.COLUMN_TYPEINFO_ID));
+		Double noteQuantity1=cur.getDouble(cur.getColumnIndex(ContractClass.Notes.COLUMN_QUANTITY1));
+		Double noteQuantity2=cur.getDouble(cur.getColumnIndex(ContractClass.Notes.COLUMN_QUANTITY2));
+		String noteNote=cur.getString(cur.getColumnIndex(ContractClass.Notes.COLUMN_NOTE));
 		ViewNote vNote = (ViewNote) view.getTag();
 		if(vNote != null) {
-			vNote.tvTitle.setText(noteTitle);
-			vNote.tvCreated.setText(noteCreated);
+			vNote.tvNotesType_ID.setText(String.valueOf(noteType_ID));
+			vNote.tvNotesTypeInfo_ID.setText(String.valueOf(noteTypeInfo_ID));
+			vNote.tvNotesQuantity1.setText(String.valueOf(noteQuantity1));
+			vNote.tvNotesQuantity2.setText(String.valueOf(noteQuantity2));
+			vNote.tvNotesNote.setText(noteNote);
 			vNote.NoteID = id;
 		}
 	}
@@ -35,10 +41,16 @@ public class NoteAdapter extends CursorAdapter {
 	public View newView(Context ctx, Cursor cur, ViewGroup parent) {
 		View root = mInflater.inflate(R.layout.notes, parent, false);
 		ViewNote vNote = new ViewNote();
-		TextView tvTitle = (TextView) root.findViewById(R.id.tvTitle);
-		TextView tvCreated = (TextView) root.findViewById(R.id.tvCreated);
-		vNote.tvTitle = tvTitle;
-		vNote.tvCreated = tvCreated;
+		TextView tvNotesType_ID = (TextView) root.findViewById(R.id.tvNotesType_ID);
+		TextView tvNotesTypeInfo_ID = (TextView) root.findViewById(R.id.tvNotesTypeInfo_ID);
+		TextView tvNotesQuantity1 = (TextView) root.findViewById(R.id.tvNotesQuantity1);
+		TextView tvNotesQuantity2 = (TextView) root.findViewById(R.id.tvNotesQuantity2);
+		TextView tvNotesNote = (TextView) root.findViewById(R.id.tvNotesNote);
+		vNote.tvNotesType_ID = tvNotesType_ID;
+		vNote.tvNotesTypeInfo_ID = tvNotesTypeInfo_ID;
+		vNote.tvNotesQuantity1 = tvNotesQuantity1;
+		vNote.tvNotesQuantity2 = tvNotesQuantity2;
+		vNote.tvNotesNote = tvNotesNote;
 		root.setTag(vNote);
 		return root;
 	}
@@ -46,8 +58,11 @@ public class NoteAdapter extends CursorAdapter {
 
 
 	public static class ViewNote {
-		public TextView tvTitle;
-		public TextView tvCreated;
+		public TextView tvNotesType_ID;
+		public TextView tvNotesTypeInfo_ID;
+		public TextView tvNotesQuantity1;
+		public TextView tvNotesQuantity2;
+		public TextView tvNotesNote;
 		public long NoteID;
 	}
 

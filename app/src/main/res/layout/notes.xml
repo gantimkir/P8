@@ -5,22 +5,55 @@
     android:layout_height="50dp"
     android:layout_marginTop="10dp">
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvNotesType_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|left"
         android:textSize="14sp"
-        android:text="Title"
+        android:text="Type_id"
         android:layout_alignParentLeft="true">
     </TextView>
     <TextView
-        android:id="@+id/tvCreated"
+        android:id="@+id/tvNotesTypeInfo_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|right"
         android:textSize="14sp"
         android:layout_marginRight="5dp"
-        android:text="Created"
+        android:text="TypeInfo_id"
         android:layout_alignParentRight="true">
+    </TextView>
+    <TextView
+        android:id="@+id/tvNotesQuantity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:textSize="14sp"
+        android:text="Quantity1"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvNotesType_ID">
+    </TextView>
+    <TextView
+        android:id="@+id/tvNotesQuantity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:textSize="14sp"
+        android:layout_marginRight="5dp"
+        android:text="Quantity2"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvNotesTypeInfo_ID">
+    </TextView>
+    <TextView
+        android:id="@+id/tvNotesNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:textSize="14sp"
+        android:layout_marginRight="5dp"
+        android:text="Note"
+        android:layout_alignParentRight="false"
+        android:layout_below="@+id/tvNotesQuantity1"
+        android:layout_alignParentLeft="true">
     </TextView>
 </RelativeLayout>

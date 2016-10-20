@@ -64,8 +64,13 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         switch (item.getItemId()) {
             case R.id.miCompose:
                 fragNotes=NotesFragment.newInstance();
-//                fragTypesInfo=TypesInfoFragment.newInstance(typeID);
                 if (!withDetails) {
+                    fragTypes = (TypesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_types);
+                    fMan=getSupportFragmentManager().beginTransaction();
+                    fMan.remove(fragTypes);
+                    fMan.add(R.id.fragment_port_canvas, fragNotes);
+                    fMan.addToBackStack(null);
+                    fMan.commit();
                 }
                 else {
                     fragTypes = (TypesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_types);
@@ -91,9 +96,6 @@ TypesInfoFragment.onTypesInfoItemClickListener, EnterInfoFragment.onEnterInfoIte
         fragTypesInfo=TypesInfoFragment.newInstance(typeID);
         if (!withDetails) {
             fMan=getSupportFragmentManager().beginTransaction();
-//            fMan.remove(fragNotes);
-//            fMan.remove(fragTypes);
-//            fMan.add(android.R.id.content, fragTypesInfo);
             fMan.replace(R.id.fragment_types,fragTypesInfo);
             fMan.addToBackStack(null);
             fMan.commit();

@@ -77,10 +77,11 @@ public class ExampleProvider extends ContentProvider {
 		public static final String KEY_NAME   = ContractClass.Types.COLUMN_NAME_NAME;
 		public static final String KEY_GOST   = ContractClass.Types.COLUMN_NAME_GOST;
 		//Notes KEYS
-		public static final String KEY_TITLE   = ContractClass.Notes.COLUMN_TITLE;
+		public static final String KEY_NOTE_TYPE_ID   = ContractClass.Notes.COLUMN_TYPE_ID;
+		public static final String KEY_TYPEINFO_ID   = ContractClass.Notes.COLUMN_TYPEINFO_ID;
+		public static final String KEY_QUANTITY1   = ContractClass.Notes.COLUMN_QUANTITY1;
+		public static final String KEY_QUANTITY2   = ContractClass.Notes.COLUMN_QUANTITY2;
 		public static final String KEY_NOTE   = ContractClass.Notes.COLUMN_NOTE;
-		public static final String KEY_CREATED_DATE   = ContractClass.Notes.COLUMN_CREATED_DATE;
-		public static final String KEY_MODIFIED_DATE   = ContractClass.Notes.COLUMN_MODIFIED_DATE;
 
 		private static String DB_PATH = "/data/data/com.example.kirill.p8/databases/";
 
@@ -203,6 +204,10 @@ public class ExampleProvider extends ContentProvider {
 				return ContractClass.Types.CONTENT_TYPE;
 			case TYPES_ID:
 				return ContractClass.Types.CONTENT_ITEM_TYPE;
+			case NOTES:
+				return ContractClass.Notes.CONTENT_TYPE;
+			case NOTES_ID:
+				return ContractClass.Notes.CONTENT_ITEM_TYPE;
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -265,26 +270,30 @@ public class ExampleProvider extends ContentProvider {
 			}
 			break;
 			case NOTES:
-				if (values.containsKey(ContractClass.Notes.COLUMN_TITLE) == false) {
-					values.put(ContractClass.Notes.COLUMN_TITLE, "");
+				if (values.containsKey(ContractClass.Notes.COLUMN_TYPE_ID) == false) {
+					values.put(ContractClass.Notes.COLUMN_TYPE_ID, 0);
+				}
+				if (values.containsKey(ContractClass.Notes.COLUMN_TYPEINFO_ID) == false) {
+					values.put(ContractClass.Notes.COLUMN_TYPEINFO_ID, 0);
+				}
+				if (values.containsKey(ContractClass.Notes.COLUMN_QUANTITY1) == false) {
+					values.put(ContractClass.Notes.COLUMN_QUANTITY1, 0.0);
+				}
+				if (values.containsKey(ContractClass.Notes.COLUMN_QUANTITY2) == false) {
+					values.put(ContractClass.Notes.COLUMN_QUANTITY2, 0.0);
 				}
 				if (values.containsKey(ContractClass.Notes.COLUMN_NOTE) == false) {
 					values.put(ContractClass.Notes.COLUMN_NOTE, "");
 				}
-				if (values.containsKey(ContractClass.Notes.COLUMN_CREATED_DATE) == false) {
-					values.put(ContractClass.Notes.COLUMN_CREATED_DATE, "");
-					if (values.containsKey(ContractClass.Notes.COLUMN_MODIFIED_DATE) == false) {
-						values.put(ContractClass.Notes.COLUMN_MODIFIED_DATE, "");
-				}
 				rowId = db.insert(ContractClass.Notes.TABLE_NAME,
-						ContractClass.Notes.COLUMN_TITLE,
+						ContractClass.Notes.COLUMN_TYPE_ID,
 						values);
 				if (rowId > 0) {
 					rowUri = ContentUris.withAppendedId(ContractClass.Notes.CONTENT_ID_URI_BASE, rowId);
 					getContext().getContentResolver().notifyChange(rowUri, null);
 				}
 				break;
-			}
+
 		}
 		return rowUri;
 	}
@@ -338,6 +347,7 @@ public class ExampleProvider extends ContentProvider {
 		}
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
+
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 		return c;
 	}
