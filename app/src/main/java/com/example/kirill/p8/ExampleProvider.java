@@ -24,6 +24,7 @@ public class ExampleProvider extends ContentProvider {
 	private static HashMap<String, String> sTypeInfoProjectionMap;
 	private static HashMap<String, String> sTypesProjectionMap;
 	private static HashMap<String, String> sNotesProjectionMap;
+	private static HashMap<String, String> sNotesFullQueryProjectionMap;
 
 	private static final int TYPEINFO = 1;
 	private static final int TYPEINFO_ID = 2;
@@ -31,6 +32,8 @@ public class ExampleProvider extends ContentProvider {
 	private static final int TYPES_ID = 4;
 	private static final int NOTES = 5;
 	private static final int NOTES_ID = 6;
+	private static final int NOTES_FULL_QUERY = 7;
+	private static final int NOTES_FULL_QUERY_ID = 8;
 
 	private static final UriMatcher sUriMatcher;
 	private DatabaseHelper dbHelper;
@@ -60,6 +63,12 @@ public class ExampleProvider extends ContentProvider {
 			sNotesProjectionMap.put(
 					ContractClass.Notes.DEFAULT_PROJECTION[i],
 					ContractClass.Notes.DEFAULT_PROJECTION[i]);
+		}
+		sNotesFullQueryProjectionMap = new HashMap<String, String>();
+		for(int i=0; i < ContractClass.NotesFullQuery.DEFAULT_PROJECTION.length; i++) {
+			sNotesFullQueryProjectionMap.put(
+					ContractClass.NotesFullQuery.DEFAULT_PROJECTION[i],
+					ContractClass.NotesFullQuery.DEFAULT_PROJECTION[i]);
 		}
 	}
 	private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -342,11 +351,18 @@ public class ExampleProvider extends ContentProvider {
 				qb.appendWhere(ContractClass.Notes._ID + "=" + uri.getPathSegments().get(ContractClass.Notes.NOTES_ID_PATH_POSITION));
 				orderBy = ContractClass.Notes.DEFAULT_SORT_ORDER;
 				break;
+			case NOTES_FULL_QUERY:
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				qb.setTables(ContractClass.Notes.TABLE_NAME+ " LEFT JOIN authors ON notes._id=authors.note_id");
+				qb.setProjectionMap(sNotesFullQueryProjectionMap);
+				orderBy = ContractClass.NotesFullQuery.DEFAULT_SORT_ORDER;
+				break;
 			default:
 				throw new IllegalArgumentException("Unknown URI " + uri);
 		}
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
+
 
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 		return c;
