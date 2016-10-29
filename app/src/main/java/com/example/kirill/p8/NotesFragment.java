@@ -18,7 +18,7 @@ import android.widget.ListView;
 public class NotesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private ListView lvNotes;
-    private NoteAdapter mAdapter;
+    private NoteFullQueryAdapter mAdapter;
 
     public interface onItemClickListener {
         public void NoteItemClick(int position, long id, long noteID);
@@ -42,7 +42,7 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mAdapter = new NoteAdapter(getContext(), null, 0);
+        mAdapter = new NoteFullQueryAdapter(getContext(), null, 0);
         View v = inflater.inflate(R.layout.notes_listview, container, false);
         if (getActivity().getSupportLoaderManager().getLoader(0)!=null){
             getActivity().getSupportLoaderManager().restartLoader(0, null, this);
@@ -55,7 +55,7 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
         lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NoteAdapter.ViewNote vhldr=(NoteAdapter.ViewNote) view.getTag();
+                NoteFullQueryAdapter.ViewNote vhldr=(NoteFullQueryAdapter.ViewNote) view.getTag();
                 listener.NoteItemClick(position,id,vhldr.NoteID);
             }
         });
@@ -83,8 +83,8 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(
                 getContext(),
-                ContractClass.Notes.CONTENT_URI,
-                ContractClass.Notes.DEFAULT_PROJECTION,
+                ContractClass.NotesFullQuery.CONTENT_URI,
+                ContractClass.NotesFullQuery.DEFAULT_PROJECTION,
                 null,
                 null,
                 null);

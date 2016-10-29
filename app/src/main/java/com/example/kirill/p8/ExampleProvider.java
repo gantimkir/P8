@@ -45,6 +45,8 @@ public class ExampleProvider extends ContentProvider {
 		sUriMatcher.addURI(ContractClass.AUTHORITY, "types/#", TYPES_ID);
 		sUriMatcher.addURI(ContractClass.AUTHORITY, "notes", NOTES);
 		sUriMatcher.addURI(ContractClass.AUTHORITY, "notes/#", NOTES_ID);
+		sUriMatcher.addURI(ContractClass.AUTHORITY, "notes", NOTES_FULL_QUERY);
+		sUriMatcher.addURI(ContractClass.AUTHORITY, "notes/#", NOTES_FULL_QUERY_ID);
 		sTypeInfoProjectionMap = new HashMap<String, String>();
 		for(int i=0; i < ContractClass.TypeInfo.DEFAULT_PROJECTION.length; i++) {
 			sTypeInfoProjectionMap.put(
@@ -352,9 +354,14 @@ public class ExampleProvider extends ContentProvider {
 				orderBy = ContractClass.Notes.DEFAULT_SORT_ORDER;
 				break;
 			case NOTES_FULL_QUERY:
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				qb.setTables(ContractClass.Notes.TABLE_NAME+ " LEFT JOIN authors ON notes._id=authors.note_id");
+				qb.setTables("("+ContractClass.NotesFullQuery.TABLE_NAME+ " LEFT JOIN types ON notes.type_id=types._id) LEFT JOIN typeinfo ON notes.typeinfo_id=typeinfo._id");
 				qb.setProjectionMap(sNotesFullQueryProjectionMap);
+				orderBy = ContractClass.NotesFullQuery.DEFAULT_SORT_ORDER;
+				break;
+			case NOTES_FULL_QUERY_ID:
+				qb.setTables("("+ContractClass.NotesFullQuery.TABLE_NAME+ " LEFT JOIN types ON notes.type_id=types._id) LEFT JOIN typeinfo ON notes.typeinfo_id=typeinfo._id");
+				qb.setProjectionMap(sNotesFullQueryProjectionMap);
+				qb.appendWhere(ContractClass.NotesFullQuery._ID + "=" + uri.getPathSegments().get(ContractClass.NotesFullQuery.NOTES_ID_PATH_POSITION));
 				orderBy = ContractClass.NotesFullQuery.DEFAULT_SORT_ORDER;
 				break;
 			default:

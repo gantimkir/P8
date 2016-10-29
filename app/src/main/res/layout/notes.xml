@@ -14,6 +14,37 @@
         android:layout_alignParentLeft="true">
     </TextView>
     <TextView
+        android:id="@+id/tvNotesTypeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:textSize="24sp"
+        android:text="Name"
+        android:layout_alignParentLeft="false"
+        android:layout_toRightOf="@+id/tvNotesType_ID">
+    </TextView>
+    <TextView
+        android:id="@+id/tvNotesTypeGOST"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:textSize="24sp"
+        android:text="GOST"
+        android:layout_alignParentLeft="false"
+        android:layout_toRightOf="@+id/tvNotesTypeName">
+    </TextView>
+    <TextView
+        android:id="@+id/tvNotesTypeInfoNumSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:textSize="24sp"
+        android:layout_marginRight="5dp"
+        android:text="NumSort"
+        android:layout_alignParentLeft="false"
+        android:layout_toLeftOf="@+id/tvNotesTypeInfo_ID">
+    </TextView>
+    <TextView
         android:id="@+id/tvNotesTypeInfo_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +62,7 @@
         android:textSize="14sp"
         android:text="Quantity1"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvNotesType_ID">
+        android:layout_below="@+id/tvNotesTypeGOST">
     </TextView>
     <TextView
         android:id="@+id/tvNotesQuantity2"
@@ -42,7 +73,7 @@
         android:layout_marginRight="5dp"
         android:text="Quantity2"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvNotesTypeInfo_ID">
+        android:layout_below="@+id/tvNotesTypeInfoNumSort">
     </TextView>
     <TextView
         android:id="@+id/tvNotesNote"

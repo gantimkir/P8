@@ -93,17 +93,18 @@ public final class ContractClass {
 		public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_NOTES_ID);
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.kirill.notes";
 		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.kirill.notes";
-		public static final String DEFAULT_SORT_ORDER = "_id ASC";
-		public static final String COLUMN_TYPE_ID   = "type_id";
+		public static final String DEFAULT_SORT_ORDER = "notes._id ASC";
+		public static final String _ID="notes._id";
+		public static final String COLUMN_TYPE_ID   = "notes.type_id";
 		public static final String COLUMN_TYPE_NAME   = "types.name";
 		public static final String COLUMN_TYPE_GOST   = "types.gost";
-		public static final String COLUMN_TYPEINFO_ID   = "typeinfo_id";
+		public static final String COLUMN_TYPEINFO_ID   = "notes.typeinfo_id";
 		public static final String COLUMN_TYPEINFO_NUMSORT  = "typeinfo.numsort";
 		public static final String COLUMN_TYPEINFO_ITEM_NAME  = "typeinfo.item_name";
 		public static final String COLUMN_TYPEINFO_MASS_PER_ITEM  = "typeinfo.mass_per_item";
-		public static final String COLUMN_QUANTITY1   = "quantity1";
-		public static final String COLUMN_QUANTITY2   = "quantity2";
-		public static final String COLUMN_NOTE   = "note";
+		public static final String COLUMN_QUANTITY1   = "notes.quantity1";
+		public static final String COLUMN_QUANTITY2   = "notes.quantity2";
+		public static final String COLUMN_NOTE   = "notes.note";
 		public static final String[] DEFAULT_PROJECTION = new String[] {
 				ContractClass.NotesFullQuery._ID,
 				ContractClass.NotesFullQuery.COLUMN_TYPE_ID,
