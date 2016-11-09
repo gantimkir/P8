@@ -229,7 +229,7 @@ public class ExampleProvider extends ContentProvider {
 		if (
 			sUriMatcher.match(uri) != TYPEINFO &&
 			sUriMatcher.match(uri) != TYPES &&
-			sUriMatcher.match(uri) != NOTES
+			sUriMatcher.match(uri) != NOTES_FULL_QUERY
 		) {
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -280,7 +280,7 @@ public class ExampleProvider extends ContentProvider {
 				getContext().getContentResolver().notifyChange(rowUri, null);
 			}
 			break;
-			case NOTES:
+			case NOTES_FULL_QUERY:
 				if (values.containsKey(ContractClass.Notes.COLUMN_TYPE_ID) == false) {
 					values.put(ContractClass.Notes.COLUMN_TYPE_ID, 0);
 				}

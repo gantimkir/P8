@@ -54,6 +54,8 @@ public class EnterInfoFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final RelativeLayout rltView=(RelativeLayout) inflater.inflate(R.layout.enter_typeinfo,null);
+        final EditText editTextItemQuantity=(EditText) rltView.findViewById(R.id.editTextItemQuantity);
+        final EditText editTextMassQuantity=(EditText) rltView.findViewById(R.id.editTextMassQuantity);
 
         String strTemp=getArguments().getString("numsort"); TextView text = (TextView)rltView.findViewById(R.id.textViewNumSort);
         text.setText("Num of sortament: " + strTemp);
@@ -77,7 +79,20 @@ public class EnterInfoFragment extends DialogFragment {
 
         builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                listener.onDialogPositiveClick(EnterInfoFragment.this, getArguments());
+                Bundle args=getArguments();
+                String strItemQuantity=editTextItemQuantity.getText().toString();
+                String strMassQuantity=editTextMassQuantity.getText().toString();
+
+                if (strItemQuantity != null && !strItemQuantity.isEmpty()) {
+                    args.putDouble("ItemQuantity",Double.valueOf(strItemQuantity));
+                }
+                else {args.putDouble("ItemQuantity",0.0d);}
+
+                if (strItemQuantity != null && !strItemQuantity.isEmpty()) {
+                    args.putDouble("MassQuantity",Double.valueOf(strMassQuantity));
+                }
+                else {args.putDouble("MassQuantity",0.0d);}
+                listener.onDialogPositiveClick(EnterInfoFragment.this, args);
 
             }
         });
@@ -92,7 +107,6 @@ public class EnterInfoFragment extends DialogFragment {
             }
         });
 
-        final EditText editTextItemQuantity=(EditText) rltView.findViewById(R.id.editTextItemQuantity);
         editTextItemQuantity.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -106,7 +120,6 @@ public class EnterInfoFragment extends DialogFragment {
                 }
         );
 
-        final EditText editTextMassQuantity=(EditText) rltView.findViewById(R.id.editTextMassQuantity);
         editTextMassQuantity.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
