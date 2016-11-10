@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements TypesFragment.onI
     boolean withDetails = true, itSelected, withNotes = false;
     FragmentTransaction fMan;
     Fragment fragNotes, fragTypes, fragTypesInfo;
+    MenuItem menuDelete;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -65,11 +66,13 @@ public class MainActivity extends AppCompatActivity implements TypesFragment.onI
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu1, menu);
+        menuDelete = (MenuItem) menu.findItem(R.id.miDelete);
         return true;
     }
 
@@ -320,5 +323,9 @@ public class MainActivity extends AppCompatActivity implements TypesFragment.onI
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+    public void setMenuDeleteVisible(Boolean flagVisible){
+        menuDelete.setVisible(flagVisible);
     }
 }

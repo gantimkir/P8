@@ -9,6 +9,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,9 +21,11 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private ListView lvNotes;
     private NoteFullQueryAdapter mAdapter;
+    MainActivity mainAct;
 
     public interface onItemClickListener {
         public void NoteItemClick(int position, long id, long noteID);
+
     }
     onItemClickListener listener;
 
@@ -59,7 +63,15 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
                 listener.NoteItemClick(position,id,vhldr.NoteID);
             }
         });
+
+
+        //try to show tooblar button
+        //MenuItem x = (MenuItem) getActivity().findViewById(R.id.miDelete);
+        //Menu y = (Menu) getActivity().findViewById();
+       // MenuItem x = (MenuItem) getActivity().findViewById(R.id.miDelete);
+       // x.setVisible(true);
         return v;
+
     }
 
 //    @Override
@@ -73,10 +85,13 @@ public class NotesFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onAttach(Context context) {
         super.onAttach(context);
         listener = (onItemClickListener) context;
+        mainAct = (MainActivity) context;
+        mainAct.menuDelete.setVisible(true);
     }
 
     @Override
     public void onDetach() {
+        mainAct.menuDelete.setVisible(false);
         super.onDetach();
     }
     @Override
